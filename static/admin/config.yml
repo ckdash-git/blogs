@@ -1,0 +1,37 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "static/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "blog"
+    label: "Blog"
+    folder: "content/blogs"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Layout", name: "layout", widget: "hidden", default: "blog"}
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
+      - {label: "Authors", name: "authors", widget: "relation", collection: "authors", search_fields: ["title"], value_field: "title", multiple: true}
+      - {label: "Featured Image", name: "image", widget: "image"}
+      - {label: "Tags", name: "tags", widget: "list"}
+      - {label: "Body", name: "body", widget: "markdown"}
+
+  - name: "authors"
+    label: "Authors"
+    folder: "content/authors"
+    path: "{{slug}}/_index"
+    create: true
+    fields:
+      - {label: "Name", name: "title", widget: "string"}
+      - {label: "Description/Bio", name: "description", widget: "text"}
+      - {label: "Profile Image", name: "image", widget: "image", required: false}
+      - {label: "Social Links", name: "social", widget: "list", fields: [
+          {label: "Icon", name: "icon", widget: "string", default: "github"},
+          {label: "Link", name: "link", widget: "string"}
+        ]}
+      - {label: "Body", name: "body", widget: "markdown", required: false}

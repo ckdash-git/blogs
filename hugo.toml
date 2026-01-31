@@ -1,7 +1,13 @@
 baseURL = "https://ckdash.com/"
 languageCode = "en-us"
-title = "CK Dash"
+title = "Chandan Kumar Dash"
 theme = "hugo-theme-stack"
+
+[taxonomies]
+    category = "categories"
+    tag = "tags"
+    series = "series"
+    author = "authors"
 
 [params]
     mainSections = ["blogs"]

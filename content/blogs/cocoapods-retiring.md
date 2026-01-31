@@ -3,6 +3,7 @@ title: "CocoaPods is Retiring: Preparing for the December 2026 Deadline"
 date: 2026-01-31
 description: "CocoaPods trunk is going read-only. Learn how to migrate your hybrid apps to SPM."
 image: "images/cocoapods-migration.jpg" # This puts the image at the top
+authors: ["ckdash"]
 tags: ["iOS", "Swift", "CocoaPods"]
 ---
 

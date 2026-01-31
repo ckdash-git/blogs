@@ -4,6 +4,7 @@ date: 2026-01-31
 draft: false
 tags: ["Swift", "Data Structures", "iOS"]
 description: "An introduction to Singly Linked Lists and how to implement them in Swift."
+authors: ["ckdash"]
 ---
 
 Hello everyone! In this article, we will discuss the **Linked List** data structure and write a program in Swift to understand how it works.
