@@ -1,0 +1,17 @@
+/* Stack uses SCSS, so we can override variables directly */
+:root {
+    --body-font-family: "Inter", -apple-system, sans-serif;
+    --heading-font-family: "Inter", sans-serif;
+    --accent-color: #7b39ed; /* Bitrise Purple */
+}
+
+.article-title {
+    font-weight: 900;
+    letter-spacing: -0.03em;
+}
+
+/* Make the sidebar profile image circular like Bitrise */
+.sidebar .avatar {
+    border-radius: 50%;
+    border: 3px solid var(--accent-color);
+}

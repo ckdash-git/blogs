@@ -1,0 +1,41 @@
+baseURL = "https://ckdash.com/"
+languageCode = "en-us"
+title = "CK Dash"
+theme = "hugo-theme-stack"
+
+[params]
+    mainSections = ["blogs"]
+    featuredImageField = "image"
+
+    [params.sidebar]
+        avatar = "https://github.com/ckdash-git.png"
+        title = "Chandan Kumar Dash"
+        subtitle = "Software Engineer | Swift, Go & Flutter"
+
+    [[params.socialIcons]]
+        name = "linkedin"
+        url = "https://www.linkedin.com/in/ckdash/"
+    [[params.socialIcons]]
+        name = "twitter"
+        url = "https://x.com/chandankdash"
+    [[params.socialIcons]]
+        name = "reddit"
+        url = "https://www.reddit.com/u/ck_dash/"
+    [[params.socialIcons]]
+        name = "github"
+        url = "https://github.com/ckdash-git"
+
+[menu]
+    [[menu.main]]
+        identifier = "home"
+        name = "Home"
+        url = "/"
+        weight = 1
+    [[menu.main]]
+        identifier = "blogs"
+        name = "Blogs"
+        url = "/blogs/"
+        weight = 2
+
+[permalinks]
+    blogs = '/blogs/:title/'

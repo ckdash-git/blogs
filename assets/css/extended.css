@@ -1,0 +1,92 @@
+:root {
+    --primary: #7b39ed;
+    /* The Bitrise Purple */
+    --text-dark: #1a1a1b;
+    --text-gray: #4a4a4a;
+    --bg-white: #ffffff;
+    --code-bg: #1e1e1e;
+}
+
+/* 1. Typography: The Core of the Look */
+body {
+    font-family: "Skandia", "Inter", -apple-system, sans-serif;
+    background-color: var(--bg-white);
+    color: var(--text-dark);
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* 2. Expansive Header Style */
+.main {
+    max-width: 900px !important;
+    /* Wider for that premium feel */
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+h1,
+h2,
+h3 {
+    font-family: "Skandia", sans-serif;
+    color: #000;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    /* Tight letter spacing for that bold look */
+    line-height: 1.1;
+}
+
+h1 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 2.2rem;
+    margin-top: 2.5em;
+    border-bottom: 2px solid #f0f1f4;
+    padding-bottom: 12px;
+}
+
+/* 3. The Feature Image (The "Header" you requested) */
+.post-content img {
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    margin: 40px 0;
+    width: 100%;
+}
+
+/* 4. Bitrise Purple Accents */
+a {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* 5. Clean Post Cards for Homepage */
+.post-entry {
+    background: #ffffff;
+    border: 1px solid #eef0f2;
+    border-radius: 20px;
+    padding: 40px !important;
+    margin-bottom: 30px;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.post-entry:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 30px 60px rgba(123, 57, 237, 0.12);
+    border-color: var(--primary);
+}
+
+/* 6. Professional Code Blocks */
+pre {
+    background: var(--code-bg) !important;
+    border-radius: 14px;
+    padding: 1.8em;
+    border: 1px solid #333;
+    font-size: 0.95rem;
+}

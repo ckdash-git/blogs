@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>CocoaPods on CK Dash</title>
+        <link>http://localhost:1313/tags/cocoapods/</link>
+        <description>Recent content in CocoaPods on CK Dash</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Sat, 31 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/cocoapods/index.xml" rel="self" type="application/rss+xml" /><item>
+            <title>CocoaPods is Retiring: Preparing for the December 2026 Deadline</title>
+            <link>http://localhost:1313/blogs/cocoapods-is-retiring-preparing-for-the-december-2026-deadline/</link>
+            <pubDate>Sat, 31 Jan 2026 00:00:00 +0000</pubDate>
+            <guid>http://localhost:1313/blogs/cocoapods-is-retiring-preparing-for-the-december-2026-deadline/</guid>
+            <description>&lt;p&gt;It’s the end of an era for the iOS ecosystem. After 15 years, &lt;strong&gt;CocoaPods is retiring.&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;Mark your calendar: &lt;strong&gt;December 2, 2026&lt;/strong&gt; — the trunk goes permanently read-only.&lt;/p&gt;&#xA;&lt;h2 id=&#34;why-move-to-spm&#34;&gt;Why move to SPM?&#xA;&lt;/h2&gt;&lt;ol&gt;&#xA;&lt;li&gt;&lt;strong&gt;Native Integration:&lt;/strong&gt; Built directly into Xcode.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;No Ruby:&lt;/strong&gt; No more Gemfile or version conflicts.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Speed:&lt;/strong&gt; Faster indexing and dependency resolution.&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;&lt;strong&gt;Start now. Go slow. And yeah — thanks, CocoaPods!&lt;/strong&gt;&lt;/p&gt;&#xA;</description>
+        </item></channel>
+</rss>
