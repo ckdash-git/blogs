@@ -11,7 +11,7 @@ menu:
 We welcome contributions from the community!
 
 ## The Developer Way (GitHub)
-    1.  **Fork the Repository**: Go to [our GitHub repo](https://github.com/ckdash-git/blogs) and click "Fork".
+1.  **Fork the Repository**: Go to [our GitHub repo](https://github.com/ckdash-git/blogs) and click "Fork".
 2.  **Create a New Post**:
     *   Create a new file in `blogs/content/your-post-slug.md`.
     *   Copy the front matter from an existing post.
