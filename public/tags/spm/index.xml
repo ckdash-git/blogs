@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>CocoaPods on Chandan Kumar Dash</title>
-        <link>http://localhost:1313/tags/cocoapods/</link>
-        <description>Recent content in CocoaPods on Chandan Kumar Dash</description>
+        <title>SPM on Chandan Kumar Dash</title>
+        <link>http://localhost:1313/tags/spm/</link>
+        <description>Recent content in SPM on Chandan Kumar Dash</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sat, 31 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/cocoapods/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 31 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/spm/index.xml" rel="self" type="application/rss+xml" /><item>
             <title>CocoaPods is Retiring: A Complete Migration Guide to SPM</title>
             <link>http://localhost:1313/blogs/cocoapods-is-retiring-a-complete-migration-guide-to-spm/</link>
             <pubDate>Sat, 31 Jan 2026 00:00:00 +0000</pubDate>

@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="CocoaPods trunk is going read-only. A step-by-step guide to migrating your iOS apps to Swift Package Manager before December 2026.">
+<title>CocoaPods is Retiring: A Complete Migration Guide to SPM</title>
+
+<link rel='canonical' href='http://localhost:1313/blogs/cocoapods-is-retiring-a-complete-migration-guide-to-spm/'>
+
+<link rel="stylesheet" href="/scss/style.min.58b9395529f0c84fadbba6c00ae1aef18b9f77531a6510eabcb6cb95745763ec.css"><meta property='og:title' content="CocoaPods is Retiring: A Complete Migration Guide to SPM">
+<meta property='og:description' content="CocoaPods trunk is going read-only. A step-by-step guide to migrating your iOS apps to Swift Package Manager before December 2026.">
+<meta property='og:url' content='http://localhost:1313/blogs/cocoapods-is-retiring-a-complete-migration-guide-to-spm/'>
+<meta property='og:site_name' content='Chandan Kumar Dash'>
+<meta property='og:type' content='article'><meta property='article:section' content='Blogs' /><meta property='article:tag' content='iOS' /><meta property='article:tag' content='Swift' /><meta property='article:tag' content='CocoaPods' /><meta property='article:tag' content='SPM' /><meta property='article:tag' content='Migration' /><meta property='article:published_time' content='2026-01-31T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-01-31T00:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/' />
+<meta name="twitter:title" content="CocoaPods is Retiring: A Complete Migration Guide to SPM">
+<meta name="twitter:description" content="CocoaPods trunk is going read-only. A step-by-step guide to migrating your iOS apps to Swift Package Manager before December 2026."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='http://localhost:1313/' />
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column compact"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        <figure class="site-avatar">
+                <a href="/">
+                    <img src="/ckdash-git_17376967194752443571.jpg" 
+                        width="460"
+                        height="460"
+                        class="site-logo"
+                        loading="lazy"
+                        alt="Avatar">
+                </a>
+                
+            </figure>
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Chandan Kumar Dash</a></h1>
+            <h2 class="site-description">Software Engineer | Swift, Go &amp; Flutter</h2>
+        </div>
+    </header><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/blogs/' >
+                
+                
+                
+                <span>Blogs</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/write-for-us/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-messages" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M21 14l-3 -3h-7a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1h9a1 1 0 0 1 1 1v10" />
+  <path d="M14 15v2a1 1 0 0 1 -1 1h-7l-3 3v-10a1 1 0 0 1 1 -1h2" />
+</svg>
+
+
+
+                
+                <span>Write for Us</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+    <div class="article-image">
+        <a href="/blogs/cocoapods-is-retiring-a-complete-migration-guide-to-spm/">
+            <img src="/blogs/cocoapods-is-retiring-a-complete-migration-guide-to-spm/cocoapods-migration.png" width="640" height="640" loading="lazy"
+                alt="Featured image of post CocoaPods is Retiring: A Complete Migration Guide to SPM" />
+        </a>
+    </div>
+    
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/blogs/cocoapods-is-retiring-a-complete-migration-guide-to-spm/">CocoaPods is Retiring: A Complete Migration Guide to SPM</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            CocoaPods trunk is going read-only. A step-by-step guide to migrating your iOS apps to Swift Package Manager before December 2026.
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published" datetime='2026-01-31T00:00:00Z'>Saturday, January 31, 2026</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    3 minutes read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    
+
+    <section class="article-content">
+    
+    
+    <p>It’s the end of an era for the iOS ecosystem. After 15 years as the de facto dependency manager for iOS, <strong>CocoaPods is retiring</strong>.</p>
+<p>Mark your calendar: <strong>December 2, 2026</strong>. That is the day the CocoaPods trunk goes permanently read-only. While existing pods will remain accessible, no new pods or updates can be published. It&rsquo;s time to move on.</p>
+<h2 id="the-legacy-of-cocoapods">The Legacy of CocoaPods
+</h2><p>Before we rush to migrate, it&rsquo;s worth acknowledging what CocoaPods achieved. It brought order to the chaos of manual dependency management (remember dragging <code>.xcodeproj</code> files and linking binaries manually?). It democratized open source in the Apple ecosystem. But as Swift has matured, the tooling has evolved.</p>
+<h2 id="why-move-to-swift-package-manager-spm">Why Move to Swift Package Manager (SPM)?
+</h2><p>Apple&rsquo;s official answer to dependency management, Swift Package Manager, has grown up.</p>
+<ol>
+<li><strong>Native Integration:</strong> It&rsquo;s built directly into Xcode. No context switching to terminals or managing a separate workspace.</li>
+<li><strong>No Ruby:</strong> Say goodbye to <code>rbenv</code>, <code>Gemfile</code>, and Ruby version conflicts that break your CI/CD.</li>
+<li><strong>Performance:</strong> SPM leverages Swift&rsquo;s build system for faster dependency resolution and indexing.</li>
+</ol>
+<p><img src="/blogs/cocoapods-is-retiring-a-complete-migration-guide-to-spm/cocoapods-spm-comparison.png"
+	width="640"
+	height="640"
+	loading="lazy"
+	
+		alt="CocoaPods vs SPM Comparison Chart"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="100"
+		data-flex-basis="240px"
+	
+></p>
+<h2 id="migration-strategy-the-long-way-home">Migration Strategy: The &ldquo;Long Way&rdquo; Home
+</h2><p>Migrating a large project isn&rsquo;t just about deleting a file. It requires a strategy.</p>
+<h3 id="step-1-audit-your-dependencies">Step 1: Audit Your Dependencies
+</h3><p>First, list every pod you currently use. Check their repositories to see if they support SPM (most popular ones like Alamofire, Kingfisher, and Lottie already do).</p>
+<pre class="mermaid">
+  flowchart TD
+    Start[Start Migration] --&gt; Audit{Audit Dependencies}
+    Audit --&gt;|All support SPM?| Simple[Switch to SPM]
+    Audit --&gt;|Some missing?| CheckAlt[Check Alternatives/Forks]
+    CheckAlt --&gt;|Found?| Simple
+    CheckAlt --&gt;|No support?| Hybrid[Keep minimal Podfile]
+    Simple --&gt; RemovePod[Remove Podfile]
+    Hybrid --&gt; Reduce[Migrate what you can]
+</pre>
+
+<h3 id="step-2-clean-up-cocoapods">Step 2: Clean Up CocoaPods
+</h3><p>Before adding new packages, you need to strip out the old integration.</p>
+<ol>
+<li><strong>Deintegrate:</strong> Run the following command in your project directory:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pod deintegrate
+</span></span></code></pre></div></li>
+<li><strong>Clean Files:</strong> Delete <code>Podfile</code>, <code>Podfile.lock</code>, and the <code>.xcworkspace</code>. From now on, you&rsquo;ll open the <code>.xcodeproj</code> directly.</li>
+</ol>
+<h3 id="step-3-adding-packages-in-xcode">Step 3: Adding Packages in Xcode
+</h3><p>This is where the magic happens.</p>
+<blockquote>
+<p><strong>Action Required:</strong></p>
+<ol>
+<li>Open Xcode.</li>
+<li>Go to <strong>File &gt; Add Package Dependencies&hellip;</strong></li>
+<li>Paste the URL of the package repository (e.g., <code>https://github.com/Alamofire/Alamofire</code>).</li>
+<li>Choose your version rules (typically &ldquo;Up to Next Major&rdquo;).</li>
+</ol>
+</blockquote>
+<p><em>(Insert Screenshot here: Show the Xcode &ldquo;Add Package Dependency&rdquo; dialog with a search result visible)</em></p>
+<h3 id="step-4-handling-resources-and-objective-c">Step 4: Handling Resources and Objective-C
+</h3><p>SPM handles resources (images, json, xibs) differently.</p>
+<ul>
+<li><strong>Bundles:</strong> If you were accessing resources via a specific bundle ID in CocoaPods, you might need to switch to using <code>Bundle.module</code> (available automatically in SPM packages).</li>
+<li><strong>Obj-C Flags:</strong> If you have legacy Objective-C dependencies, ensure you check the &ldquo;Build Settings&rdquo; for Linker Flags. SPM usually handles this, but sometimes you may need to add <code>-ObjC</code> manually if a comprehensive static library is involved.</li>
+</ul>
+<h2 id="common-pitfalls">Common Pitfalls
+</h2><ul>
+<li><strong>Dynamic vs Static:</strong> CocoaPods defaults to static libraries (unless <code>use_frameworks!</code> is set). SPM tries to interpret the package manifest. If you get duplicate symbol errors, check if you are linking a static library in multiple targets.</li>
+<li><strong>CI/CD:</strong> Update your pipeline (<code>.github/workflows</code> or Fastlane). You no longer need <code>pod install</code>. Instead, add a step to resolve package versions if you cache them:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>xcodebuild -resolvePackageDependencies
+</span></span></code></pre></div></li>
+</ul>
+<h2 id="conclusion">Conclusion
+</h2><p>The deadline is 2026, but the best time to migrate is now. By moving to SPM, you simplify your project capability and align with the future of Apple development.</p>
+<p><strong>Start now. Go slow. And yeah — thanks for everything, CocoaPods!</strong></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/ios/">IOS</a>
+        
+            <a href="/tags/swift/">Swift</a>
+        
+            <a href="/tags/cocoapods/">CocoaPods</a>
+        
+            <a href="/tags/spm/">SPM</a>
+        
+            <a href="/tags/migration/">Migration</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/blogs/mastering-linked-lists-in-swift-a-comprehensive-guide/">
+        
+        <div class="article-image">
+            <img src="/blogs/mastering-linked-lists-in-swift-a-comprehensive-guide/linked-list-structure.png" width="640" height="640" loading="lazy"
+                alt="Featured image of post Mastering Linked Lists in Swift: A Comprehensive Guide">
+        </div>
+        
+
+        <div class="article-details"style="background: linear-gradient(0deg, #6e5ec780 0%, #eef3f8C0 100%);">
+            <h2 class="article-title">Mastering Linked Lists in Swift: A Comprehensive Guide</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2026 Chandan Kumar Dash
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="4.0.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+
+
+
+<script type="module">
+    import gallery from '\/ts\/gallery.js';
+
+    const articleContent = document.querySelector('.article-content');
+    const shouldLoad = articleContent && (articleContent.querySelectorAll('figure').length > 0 || articleContent.querySelectorAll('img.gallery-image').length > 0);
+    
+    if (shouldLoad) {
+        gallery(articleContent);
+
+        const PhotoSwipeLightbox = (await import("https:\/\/cdn.jsdelivr.net\/npm\/photoswipe@5.4.4\/dist\/photoswipe-lightbox.esm.min.js")).default;
+        const styleHref = "https:\/\/cdn.jsdelivr.net\/npm\/photoswipe@5.4.4\/dist\/photoswipe.css";
+
+        const styleTag = document.createElement('link');
+        styleTag.rel = 'stylesheet';
+        styleTag.href = styleHref;
+        document.head.appendChild(styleTag);
+
+        const lightbox = new PhotoSwipeLightbox({
+            gallerySelector: '.article-content',
+            childSelector: 'figure a.image-link',
+            pswpModule: () => import("https:\/\/cdn.jsdelivr.net\/npm\/photoswipe@5.4.4\/dist\/photoswipe.esm.min.js")
+        });
+        lightbox.init();
+    }
+</script>
+    
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11.12.2/+esm';
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: 'neutral',
+    });
+</script>
+
+
+            </main>
+        </div>
+        <script type="text/javascript" src="/ts/main.39cc80f12e6178a46c3da502586a5f84be9f2c349788bcc21d5180619caf76eb.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
