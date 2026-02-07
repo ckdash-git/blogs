@@ -55,6 +55,11 @@ theme = "hugo-theme-stack"
         name = "Blogs"
         url = "/blogs/"
         weight = 2
+    [[menu.main]]
+        identifier = "about"
+        name = "About"
+        url = "/about/"
+        weight = 3
 
 [permalinks]
     blogs = '/blogs/:title/'
