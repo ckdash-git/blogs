@@ -25,7 +25,7 @@ theme = "hugo-theme-stack"
     [params.sidebar]
         avatar = "https://github.com/ckdash-git.png"
         title = "Chandan Kumar Dash"
-        subtitle = "Software Engineer | Swift, Go & Flutter"
+        subtitle = "Software Development Engineer | Backend, Mobile - iOS, Go & Flutter"
 
     [params.colorScheme]
         toggle = true
