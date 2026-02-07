@@ -1,5 +1,5 @@
 ---
-title: "Write for Us"
+title: "Write for Internet"
 description: "Become a contributor to the blog."
 menu:
     main:

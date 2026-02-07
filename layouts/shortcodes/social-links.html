@@ -1,0 +1,56 @@
+<div class="social-menu-shortcode">
+    <ul class="menu-social">
+        {{ range site.Params.socialIcons }}
+            <li>
+                <a href="{{ .url }}" target="_blank" rel="noopener noreferrer" title="{{ .name }}">
+                    {{ partial "helper/icon" .name }}
+                    <span class="visibly-hidden">{{ .name }}</span>
+                </a>
+            </li>
+        {{ end }}
+    </ul>
+</div>
+
+<style>
+.social-menu-shortcode .menu-social {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    gap: 15px;
+}
+.social-menu-shortcode .menu-social li {
+    display: inline-flex;
+}
+.social-menu-shortcode .menu-social a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--card-background);
+    color: var(--body-text-color);
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+.social-menu-shortcode .menu-social a:hover {
+    transform: translateY(-3px);
+    color: var(--accent-color);
+}
+.social-menu-shortcode svg {
+    width: 24px;
+    height: 24px;
+}
+.visibly-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+</style>
