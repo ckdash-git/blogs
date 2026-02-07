@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='http://localhost:1313/blogs/cocoapods-is-retiring-a-complete-migration-guide-to-spm/'>
 
-<link rel="stylesheet" href="/scss/style.min.58b9395529f0c84fadbba6c00ae1aef18b9f77531a6510eabcb6cb95745763ec.css"><meta property='og:title' content="CocoaPods is Retiring: A Complete Migration Guide to SPM">
+<link rel="stylesheet" href="/scss/style.min.42bdaf1f8b1ae3c7401cb690950c9fd6acdbadce39e7789976b3e477d8a98b82.css"><meta property='og:title' content="CocoaPods is Retiring: A Complete Migration Guide to SPM">
 <meta property='og:description' content="CocoaPods trunk is going read-only. A step-by-step guide to migrating your iOS apps to Swift Package Manager before December 2026.">
 <meta property='og:url' content='http://localhost:1313/blogs/cocoapods-is-retiring-a-complete-migration-guide-to-spm/'>
 <meta property='og:site_name' content='Chandan Kumar Dash'>
@@ -255,7 +255,7 @@
 </h3><p>Before adding new packages, you need to strip out the old integration.</p>
 <ol>
 <li><strong>Deintegrate:</strong> Run the following command in your project directory:
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pod deintegrate
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>pod deintegrate
 </span></span></code></pre></div></li>
 <li><strong>Clean Files:</strong> Delete <code>Podfile</code>, <code>Podfile.lock</code>, and the <code>.xcworkspace</code>. From now on, you&rsquo;ll open the <code>.xcodeproj</code> directly.</li>
 </ol>
@@ -281,7 +281,7 @@
 </h2><ul>
 <li><strong>Dynamic vs Static:</strong> CocoaPods defaults to static libraries (unless <code>use_frameworks!</code> is set). SPM tries to interpret the package manifest. If you get duplicate symbol errors, check if you are linking a static library in multiple targets.</li>
 <li><strong>CI/CD:</strong> Update your pipeline (<code>.github/workflows</code> or Fastlane). You no longer need <code>pod install</code>. Instead, add a step to resolve package versions if you cache them:
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>xcodebuild -resolvePackageDependencies
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>xcodebuild -resolvePackageDependencies
 </span></span></code></pre></div></li>
 </ul>
 <h2 id="conclusion">Conclusion

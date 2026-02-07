@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='http://localhost:1313/page/write-for-us/'>
 
-<link rel="stylesheet" href="/scss/style.min.58b9395529f0c84fadbba6c00ae1aef18b9f77531a6510eabcb6cb95745763ec.css"><meta property='og:title' content="Write for Us">
+<link rel="stylesheet" href="/scss/style.min.42bdaf1f8b1ae3c7401cb690950c9fd6acdbadce39e7789976b3e477d8a98b82.css"><meta property='og:title' content="Write for Us">
 <meta property='og:description' content="Become a contributor to the blog.">
 <meta property='og:url' content='http://localhost:1313/page/write-for-us/'>
 <meta property='og:site_name' content='Chandan Kumar Dash'>
@@ -174,7 +174,7 @@
 
 
                 <time class="article-time--reading">
-                    1 minute read
+                    2 minutes read
                 </time>
             </div>
         
@@ -191,26 +191,74 @@
     <section class="article-content">
     
     
-    <p>We welcome contributions from the community!</p>
-<h2 id="the-developer-way-github">The Developer Way (GitHub)
-</h2><ol>
-<li><strong>Fork the Repository</strong>: Go to <a class="link" href="https://github.com/ckdash-git/blogs"  target="_blank" rel="noopener"
-    >our GitHub repo</a> and click &ldquo;Fork&rdquo;.</li>
-<li><strong>Create a New Post</strong>:
-<ul>
-<li>Create a new file in <code>blogs/content/your-post-slug.md</code>.</li>
-<li>Copy the front matter from an existing post.</li>
-</ul>
+    <p>We welcome contributions from the community! Whether it&rsquo;s a technical tutorial, a deep dive into Swift/Go features, or a career advice piece, we&rsquo;d love to host it.</p>
+<h2 id="the-developer-way-github-workflow">The Developer Way (GitHub Workflow)
+</h2><p>Since this blog is open source, contributing is as simple as submitting a Pull Request (PR).</p>
+<h3 id="1-fork--clone">1. Fork &amp; Clone
+</h3><ol>
+<li>Go to <a class="link" href="https://github.com/ckdash-git/blogs"  target="_blank" rel="noopener"
+    >our GitHub repo</a> and click the <strong>Fork</strong> button in the top-right corner.</li>
+<li>Clone your fork locally:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>git clone https://github.com/&lt;YOUR-USERNAME&gt;/blogs.git
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span><span style="color:#8be9fd;font-style:italic">cd</span> blogs
+</span></span></code></pre></div></li>
+<li>Create a new branch for your post:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>git checkout -b post/my-new-article
+</span></span></code></pre></div></li>
+</ol>
+<h3 id="2-create-your-post">2. Create Your Post
+</h3><p>We use <strong>Page Bundles</strong> to keep images and content organized.</p>
+<ol>
+<li>
+<p>Create a new folder in <code>content/blogs/</code> with your slug (URL friendly name):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>mkdir content/blogs/my-awesome-post
+</span></span></code></pre></div></li>
+<li>
+<p>Create an <code>index.md</code> file inside that folder.</p>
 </li>
-<li><strong>Submit a Pull Request</strong>: Commit your changes and open a PR.</li>
+<li>
+<p>Copy and paste the following <strong>Front Matter</strong> at the top of your <code>index.md</code> file:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span>---
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>title: &#34;My Awesome Post Title&#34;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>date: 2026-02-07
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>description: &#34;A short, catchy summary of your article.&#34;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>image: &#34;hero-image.png&#34; # Optional: Place image in the same folder
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>authors: [&#34;your-github-username&#34;]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>tags: [&#34;Swift&#34;, &#34;Tutorial&#34;, &#34;Beginner&#34;]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>---
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>Start writing your content here...
+</span></span></code></pre></div></li>
+</ol>
+<h3 id="3-writing-content">3. Writing Content
+</h3><ul>
+<li><strong>Images</strong>: Place image files directly in your post folder (e.g., <code>content/blogs/my-awesome-post/screenshot.png</code>) and reference them simply by filename: <code>![Alt Text](screenshot.png)</code>.</li>
+<li><strong>Code Blocks</strong>: Use triple backticks with the language name for syntax highlighting:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-swift" data-lang="swift"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">hello</span>() {
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span>    <span style="font-style:italic">print</span>(<span style="color:#f1fa8c">&#34;Hello, World!&#34;</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span>}
+</span></span></code></pre></div></li>
+</ul>
+<h3 id="4-submit-your-changes">4. Submit Your Changes
+</h3><ol>
+<li>Commit your changes:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>git add .
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span>git commit -m <span style="color:#f1fa8c">&#34;Add post: My Awesome Post&#34;</span>
+</span></span></code></pre></div></li>
+<li>Push to your fork:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>git push origin post/my-new-article
+</span></span></code></pre></div></li>
+<li>Go to the <a class="link" href="https://github.com/ckdash-git/blogs"  target="_blank" rel="noopener"
+    >original repository</a> and click <strong>Compare &amp; pull request</strong>.</li>
 </ol>
 <h2 id="style-guide">Style Guide
 </h2><ul>
-<li>Use <strong>Markdown</strong> for formatting.</li>
-<li>Keep code snippets in <code>swift</code>, <code>go</code>, or <code>dart</code> fenced blocks.</li>
-<li>Be kind and helpful!</li>
+<li><strong>Tone</strong>: Friendly, professional, and educational.</li>
+<li><strong>Formatting</strong>: Use <strong>bold</strong> for key concepts and <em>italics</em> for emphasis.</li>
+<li><strong>Headings</strong>: Use <code>## H2</code> for main sections and <code>### H3</code> for subsections.</li>
+<li><strong>Length</strong>: Aim for 500-1500 words. Quality &gt; Quantity.</li>
 </ul>
-<p>We&rsquo;ll review your post and publish it once approved!</p>
+<p>We&rsquo;ll review your PR, suggest edits if needed, and merge it once it looks good. Happy writing!</p>
 
 </section>
 

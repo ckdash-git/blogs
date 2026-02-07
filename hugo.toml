@@ -3,6 +3,15 @@ languageCode = "en-us"
 title = "Chandan Kumar Dash"
 theme = "hugo-theme-stack"
 
+[markup]
+  [markup.highlight]
+    style = "dracula"
+    lineNos = true
+    lineNumbersInTable = false
+    noClasses = true
+    guessSyntax = true
+    tabWidth = 4
+
 [taxonomies]
     category = "categories"
     tag = "tags"

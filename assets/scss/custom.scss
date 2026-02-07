@@ -2,7 +2,8 @@
 :root {
     --body-font-family: "Inter", -apple-system, sans-serif;
     --heading-font-family: "Inter", sans-serif;
-    --accent-color: #7b39ed; /* Bitrise Purple */
+    --accent-color: #7b39ed;
+    /* Bitrise Purple */
 }
 
 .article-title {
@@ -14,4 +15,64 @@
 .sidebar .avatar {
     border-radius: 50%;
     border: 3px solid var(--accent-color);
+}
+
+/* IDE Style Code Blocks */
+.article-content pre {
+    background: #282a36 !important;
+    /* Dracula BG */
+    border-radius: 8px;
+    position: relative;
+    padding-top: 40px !important;
+    /* Space for the header */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    overflow: auto;
+}
+
+.article-content pre::before {
+    content: "";
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #ff5f56; /* Red dot */
+    
+    /* Using shadows for the other two dots to save DOM elements */
+    box-shadow: 
+        20px 0 0 #ffbd2e,   /* Yellow dot */
+        40px 0 0 #27c93f;   /* Green dot */
+    
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Optional header bar background */
+.article-content pre::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 36px;
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px 8px 0 0;
+    pointer-events: none;
+}
+
+/* Fix padding for code inside */
+.article-content pre code {
+    font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+    font-size: 0.9em;
+    line-height: 1.5;
+}
+
+/* Line Number Styling */
+.article-content .chroma .lntd:first-child {
+    padding-right: 1em;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    margin-right: 1em;
+    color: rgba(255, 255, 255, 0.3);
 }
