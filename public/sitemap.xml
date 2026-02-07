@@ -8,6 +8,9 @@
     <loc>http://localhost:1313/blogs/</loc>
     <lastmod>2026-01-31T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>http://localhost:1313/categories/</loc>
+    <lastmod>2026-01-31T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>http://localhost:1313/</loc>
     <lastmod>2026-01-31T00:00:00+00:00</lastmod>
   </url><url>
@@ -23,10 +26,16 @@
     <loc>http://localhost:1313/tags/cs-fundamentals/</loc>
     <lastmod>2026-01-31T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>http://localhost:1313/categories/data-structures/</loc>
+    <lastmod>2026-01-31T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>http://localhost:1313/tags/data-structures/</loc>
     <lastmod>2026-01-31T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/ios/</loc>
+    <lastmod>2026-01-31T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/ios-development/</loc>
     <lastmod>2026-01-31T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/blogs/mastering-linked-lists-in-swift-a-comprehensive-guide/</loc>
@@ -45,8 +54,6 @@
     <lastmod>2026-01-31T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/about/</loc>
-  </url><url>
-    <loc>http://localhost:1313/categories/</loc>
   </url><url>
     <loc>http://localhost:1313/authors/guest/</loc>
   </url><url>

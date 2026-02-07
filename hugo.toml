@@ -65,6 +65,12 @@ theme = "hugo-theme-stack"
         name = "About"
         url = "/about/"
         weight = 4
+    [[menu.main]]
+        identifier = "write-for-us"
+        name = "Write for Internet"
+        url = "/page/write-for-us/"
+        weight = 5
+        params = { icon = "messages" }
 
 [permalinks]
     blogs = '/blogs/:title/'

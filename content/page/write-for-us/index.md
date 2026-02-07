@@ -1,11 +1,6 @@
 ---
 title: "Write for Internet"
 description: "Become a contributor to the blog."
-menu:
-    main:
-        weight: 3
-        params:
-            icon: "messages"
 ---
 
 We welcome contributions from the community! Whether it's a technical tutorial, a deep dive into Swift/Go features, or a career advice piece, we'd love to host it.
