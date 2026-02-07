@@ -18,6 +18,10 @@ theme = "hugo-theme-stack"
         title = "Chandan Kumar Dash"
         subtitle = "Software Engineer | Swift, Go & Flutter"
 
+    [params.colorScheme]
+        toggle = true
+        default = "light"
+
     [[params.socialIcons]]
         name = "linkedin"
         url = "https://www.linkedin.com/in/ckdash/"
