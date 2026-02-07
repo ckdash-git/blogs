@@ -4,5 +4,18 @@
         <link>http://localhost:1313/categories/</link>
         <description>Recent content in Categories on Chandan Kumar Dash</description>
         <generator>Hugo -- gohugo.io</generator>
-        <language>en-us</language><atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" /></channel>
+        <language>en-us</language>
+        <lastBuildDate>Sat, 31 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+            <title>Data Structures</title>
+            <link>http://localhost:1313/categories/data-structures/</link>
+            <pubDate>Sat, 31 Jan 2026 00:00:00 +0000</pubDate>
+            <guid>http://localhost:1313/categories/data-structures/</guid>
+            <description></description>
+        </item><item>
+            <title>IOS Development</title>
+            <link>http://localhost:1313/categories/ios-development/</link>
+            <pubDate>Sat, 31 Jan 2026 00:00:00 +0000</pubDate>
+            <guid>http://localhost:1313/categories/ios-development/</guid>
+            <description></description>
+        </item></channel>
 </rss>

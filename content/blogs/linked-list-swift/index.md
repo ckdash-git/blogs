@@ -6,6 +6,7 @@ tags: ["Swift", "Data Structures", "iOS", "CS Fundamentals"]
 description: "A deep dive into Singly and Doubly Linked Lists in Swift, including time complexity analysis and practical implementation."
 image: "linked-list-structure.png"
 authors: ["ckdash"]
+categories: ["Data Structures"]
 ---
 
 Linked Lists are one of the most fundamental data structures in computer science. While Swift's standard library provides powerful `Array` and `Set` types, understanding Linked Lists is crucial for coding interviews and understanding memory management.

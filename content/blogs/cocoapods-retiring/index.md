@@ -5,6 +5,7 @@ description: "CocoaPods trunk is going read-only. A step-by-step guide to migrat
 image: "cocoapods-migration.png"
 authors: ["ckdash"]
 tags: ["iOS", "Swift", "CocoaPods", "SPM", "Migration"]
+categories: ["iOS Development"]
 ---
 
 It’s the end of an era for the iOS ecosystem. After 15 years as the de facto dependency manager for iOS, **CocoaPods is retiring**.
