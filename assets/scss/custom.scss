@@ -6,6 +6,22 @@
     /* Bitrise Purple */
 }
 
+/* Enhanced Dark Mode */
+[data-scheme="dark"] {
+    --body-background: #121212;
+    --card-background: #1e1e1e;
+    --card-background-selected: #2a2a2a;
+    --card-text-color-main: #e0e0e0;
+    --card-text-color-secondary: #b0b0b0;
+    --card-text-color-tertiary: #909090;
+    --card-separator-color: rgba(255, 255, 255, 0.08);
+    --accent-color: #9b59b6;
+    --accent-color-darker: #8e44ad;
+    --body-text-color: #b0b0b0;
+    --scrollbar-thumb: #3a3a3a;
+    --scrollbar-track: #1a1a1a;
+}
+
 .article-title {
     font-weight: 900;
     letter-spacing: -0.03em;
@@ -37,13 +53,16 @@
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background-color: #ff5f56; /* Red dot */
-    
+    background-color: #ff5f56;
+    /* Red dot */
+
     /* Using shadows for the other two dots to save DOM elements */
-    box-shadow: 
-        20px 0 0 #ffbd2e,   /* Yellow dot */
-        40px 0 0 #27c93f;   /* Green dot */
-    
+    box-shadow:
+        20px 0 0 #ffbd2e,
+        /* Yellow dot */
+        40px 0 0 #27c93f;
+    /* Green dot */
+
     z-index: 2;
     pointer-events: none;
 }
