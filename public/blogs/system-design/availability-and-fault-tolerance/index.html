@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=55562&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Why distributed systems achieve higher Throughput than Monoliths. We explore the relationship between Latency and Throughput, and how Load Balancers and CDNs optimize data flow.">
-<title>Throughput in Distributed Systems: The Impact of Scale</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Why Monoliths crash hard and Distributed Systems stay alive. We explore the concepts of High Availability, Single Points of Failure (SPOF), and how Replication saves the day.">
+<title>Availability &amp; Fault Tolerance: Keeping the Lights On</title>
 
-<link rel='canonical' href='http://localhost:55562/blogs/system-design/throughput-in-distributed-systems/'>
+<link rel='canonical' href='http://localhost:55562/blogs/system-design/availability-and-fault-tolerance/'>
 
-<link rel="stylesheet" href="/scss/style.min.f8c0f8630bb3b8ecceb9476a9adf9801f44aa2dca566b2eeedd978695b1bb9df.css"><meta property='og:title' content="Throughput in Distributed Systems: The Impact of Scale">
-<meta property='og:description' content="Why distributed systems achieve higher Throughput than Monoliths. We explore the relationship between Latency and Throughput, and how Load Balancers and CDNs optimize data flow.">
-<meta property='og:url' content='http://localhost:55562/blogs/system-design/throughput-in-distributed-systems/'>
+<link rel="stylesheet" href="/scss/style.min.f8c0f8630bb3b8ecceb9476a9adf9801f44aa2dca566b2eeedd978695b1bb9df.css"><meta property='og:title' content="Availability & Fault Tolerance: Keeping the Lights On">
+<meta property='og:description' content="Why Monoliths crash hard and Distributed Systems stay alive. We explore the concepts of High Availability, Single Points of Failure (SPOF), and how Replication saves the day.">
+<meta property='og:url' content='http://localhost:55562/blogs/system-design/availability-and-fault-tolerance/'>
 <meta property='og:site_name' content='Chandan Kumar Dash'>
-<meta property='og:type' content='article'><meta property='article:section' content='Blogs' /><meta property='article:tag' content='System Design' /><meta property='article:tag' content='Throughput' /><meta property='article:tag' content='Distributed Systems' /><meta property='article:tag' content='Performance' /><meta property='article:published_time' content='2026-02-08T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-02-08T00:00:00&#43;00:00'/>
-<meta name="twitter:title" content="Throughput in Distributed Systems: The Impact of Scale">
-<meta name="twitter:description" content="Why distributed systems achieve higher Throughput than Monoliths. We explore the relationship between Latency and Throughput, and how Load Balancers and CDNs optimize data flow.">
+<meta property='og:type' content='article'><meta property='article:section' content='Blogs' /><meta property='article:tag' content='System Design' /><meta property='article:tag' content='Availability' /><meta property='article:tag' content='Fault Tolerance' /><meta property='article:tag' content='Reliability' /><meta property='article:published_time' content='2026-02-08T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-02-08T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="Availability & Fault Tolerance: Keeping the Lights On">
+<meta name="twitter:description" content="Why Monoliths crash hard and Distributed Systems stay alive. We explore the concepts of High Availability, Single Points of Failure (SPOF), and how Replication saves the day.">
     </head>
     <body class="
     article-page
@@ -177,12 +177,12 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/blogs/system-design/throughput-in-distributed-systems/">Throughput in Distributed Systems: The Impact of Scale</a>
+            <a href="/blogs/system-design/availability-and-fault-tolerance/">Availability &amp; Fault Tolerance: Keeping the Lights On</a>
         </h2>
     
         
         <h3 class="article-subtitle">
-            Why distributed systems achieve higher Throughput than Monoliths. We explore the relationship between Latency and Throughput, and how Load Balancers and CDNs optimize data flow.
+            Why Monoliths crash hard and Distributed Systems stay alive. We explore the concepts of High Availability, Single Points of Failure (SPOF), and how Replication saves the day.
         </h3>
         
     </div>
@@ -235,87 +235,94 @@
     <section class="article-content">
     
     
-    <p>In our previous discussions, we covered <a class="link" href="/blogs/system-design/monolithic-architecture/" >Monoliths</a>, <a class="link" href="/blogs/system-design/distributed-systems/" >Distributed Systems</a>, and <a class="link" href="/blogs/system-design/latency-in-web-applications/" >Latency</a>.</p>
-<p>Today, we decode <strong>Throughput</strong> (often measured in bits per second, bps)—the measure of how much work your system can actually handle. While Latency is about &ldquo;speed,&rdquo; Throughput is about &ldquo;capacity.&rdquo;</p>
-<h2 id="what-is-throughput">What is Throughput?
-</h2><p><strong>Throughput</strong> is the amount of work (requests, data, transactions) a system can process in a given unit of time.</p>
+    <p>Imagine it&rsquo;s the day of your board exam results. You, along with millions of other students, log in to the result portal at 10:00 AM. The site crashes. That is an <strong>Availability</strong> failure.</p>
+<p>In previous posts, we discussed <a class="link" href="/blogs/system-design/throughput-in-distributed-systems/" >Throughput</a> and <a class="link" href="/blogs/system-design/latency-in-web-applications/" >Latency</a>. Today, we tackle the most critical aspect of any production system: <strong>staying online</strong>.</p>
+<h2 id="core-concepts">Core Concepts
+</h2><h3 id="1-availability">1. Availability
+</h3><p><strong>Availability</strong> is the percentage of time a system is operational and accessible to users. It&rsquo;s often measured in &ldquo;nines&rdquo;:</p>
 <ul>
-<li><strong>Latency</strong>: How long does it take to move <em>one</em> car from A to B?</li>
-<li><strong>Throughput</strong>: How many cars <em>per hour</em> can move from A to B?</li>
+<li><strong>99%</strong>: Down for 3.65 days/year.</li>
+<li><strong>99.99% (&ldquo;Four Nines&rdquo;)</strong>: Down for 52 minutes/year.</li>
+<li><strong>99.999% (&ldquo;Five Nines&rdquo;)</strong>: Down for 5 minutes/year.</li>
 </ul>
-<p>Ideally, you want <strong>High Throughput</strong> and <strong>Low Latency</strong>. However, improving one can sometimes hurt the other.</p>
-<h2 id="throughput-monolithic-vs-distributed">Throughput: Monolithic vs. Distributed
-</h2><div class="table-wrapper"><table>
+<h3 id="2-fault-tolerance">2. Fault Tolerance
+</h3><p><strong>Fault Tolerance</strong> is the ability of a system to continue operating properly in the event of the failure of some of its components.</p>
+<ul>
+<li><em>Example</em>: If one engine of an airplane fails, the plane can still fly. The plane is Fault Tolerant.</li>
+</ul>
+<h3 id="3-single-point-of-failure-spof">3. Single Point of Failure (SPOF)
+</h3><p>A part of a system that, if it fails, stops the entire system from working.</p>
+<h2 id="monoliths-vs-distributed-systems">Monoliths vs. Distributed Systems
+</h2><p>The architectural choice you make dictates your system&rsquo;s survival strategy.</p>
+<div class="table-wrapper"><table>
   <thead>
       <tr>
           <th style="text-align: left">Feature</th>
-          <th style="text-align: left">Monolithic System</th>
+          <th style="text-align: left">Monolithic Architecture</th>
           <th style="text-align: left">Distributed System</th>
       </tr>
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: left"><strong>Resources</strong></td>
-          <td style="text-align: left">Limited to one machine (CPU/RAM cap)</td>
-          <td style="text-align: left">Virtually unlimited (Add more machines)</td>
+          <td style="text-align: left"><strong>Structure</strong></td>
+          <td style="text-align: left">All-in-one bundle</td>
+          <td style="text-align: left">Modular, spread across nodes</td>
       </tr>
       <tr>
-          <td style="text-align: left"><strong>Scaling</strong></td>
-          <td style="text-align: left">Vertical (Expensive, Hard limit)</td>
-          <td style="text-align: left">Horizontal (Add nodes endlessly)</td>
+          <td style="text-align: left"><strong>Failure Mode</strong></td>
+          <td style="text-align: left"><strong>SPOF</strong>: If the server crashes, everything dies.</td>
+          <td style="text-align: left"><strong>Resilient</strong>: If one node dies, others take over.</td>
       </tr>
       <tr>
-          <td style="text-align: left"><strong>Throughput</strong></td>
-          <td style="text-align: left"><strong>Low/Capped</strong></td>
-          <td style="text-align: left"><strong>High/Uncapped</strong></td>
+          <td style="text-align: left"><strong>Availability</strong></td>
+          <td style="text-align: left">Low (Requires downtime for updates/crashes)</td>
+          <td style="text-align: left">High (Zero-downtime deployments)</td>
       </tr>
       <tr>
-          <td style="text-align: left"><strong>Bottleneck</strong></td>
-          <td style="text-align: left">The single server itself</td>
-          <td style="text-align: left">Network bandwidth or Database</td>
+          <td style="text-align: left"><strong>Recovery</strong></td>
+          <td style="text-align: left">Reboot the entire beast</td>
+          <td style="text-align: left">Automatic failover</td>
       </tr>
   </tbody>
 </table></div>
-<h3 id="why-distributed-systems-win-on-throughput">Why Distributed Systems Win on Throughput
-</h3><p>In a Monolith, your throughput is hard-capped by the physical limits of the server. If your server can handle 1,000 requests/sec, that&rsquo;s it.</p>
-<p>In a Distributed System, you can use <strong>Horizontal Scaling</strong>. If one server handles 1,000 req/sec, ten servers handle 10,000 req/sec.</p>
 <pre class="mermaid">
   graph TD
-    LB[Load Balancer] --&gt; S1[Server 1]
-    LB --&gt; S2[Server 2]
-    LB --&gt; S3[Server 3]
-    S1 --&gt; DB[(Database)]
-    S2 --&gt; DB
-    S3 --&gt; DB
-    style LB fill:#f9f,stroke:#333
+    subgraph Monolith [Monolithic System - SPOF]
+        User1[User] --&gt; Server[Single Server]
+        Server -.-&gt; Crash[X Crash]
+        Crash -.-&gt; Down[System Offline]
+        style Server fill:#ff9999
+    end
+
+    subgraph Distributed [Distributed System - Fault Tolerant]
+        User2[User] --&gt; LB[Load Balancer]
+        LB --&gt; NodeA[Node A]
+        LB --&gt; NodeB[Node B]
+        NodeA -.-&gt; Fail[X Fail]
+        LB ==Failover==&gt; NodeB
+        style NodeA fill:#ff9999
+        style NodeB fill:#99ff99
+    end
 </pre>
 
-<p><em>By adding Servers (S1, S2, S3&hellip;), you increase the total throughput of the system linearly.</em></p>
-<h2 id="what-kills-throughput">What Kills Throughput?
-</h2><p>Even in distributed systems, throughput isn&rsquo;t infinite. Three main factors drag it down:</p>
+<h2 id="the-secret-sauce-replication">The Secret Sauce: Replication
+</h2><p>How do distributed systems achieve high availability? <strong>Redundancy</strong>.</p>
+<p>We don&rsquo;t just rely on one server. We <strong>Replicate</strong> everything.</p>
 <ol>
-<li><strong>Latency</strong>: If each request takes longer to process (high latency), the server is busy for longer, reducing the number of requests it can handle per second.</li>
-<li><strong>Protocol Overhead</strong>: Every network call involves handshakes (TCP/TLS) and headers. This &ldquo;administrative&rdquo; data consumes bandwidth that could be used for actual payload.</li>
-<li><strong>Congestion</strong>: When too many requests arrive at once, queues fill up. Packets get dropped, causing retries, which further clogs the system.</li>
+<li><strong>Application Replication</strong>: Run the same code on 10 different servers. If 3 crash, 7 are still running.</li>
+<li><strong>Data Replication</strong>: Store your user data on a primary database and sync it to a standby replica. If the primary burns down, the standby takes over.</li>
+<li><strong>Geographic Replication</strong>: Don&rsquo;t put all servers in one data center. If the entire underlying power grid of a region fails, your app typically keeps running from a different region.</li>
 </ol>
-<h2 id="strategies-to-maximize-throughput">Strategies to Maximize Throughput
-</h2><p>To get the most out of your distributed system, you need to optimize the flow of data.</p>
-<h3 id="1-load-balancing">1. Load Balancing
-</h3><p>A <strong>Load Balancer</strong> sits in front of your servers and distributes traffic evenly (e.g., Round Robin). This ensures no single server is overwhelmed while others sit idle.</p>
-<h3 id="2-caching--cdns">2. Caching &amp; CDNs
-</h3><p>Serving data from a cache or <a class="link" href="/blogs/system-design/latency-in-web-applications/" >CDN</a> avoids hitting the backend servers entirely.</p>
-<ul>
-<li><strong>Real-Life Example</strong>: <strong>Netflix</strong>. By serving video chunks from a local ISP server (CDN), they offload terabytes of data from their main servers, massively increasing global throughput.</li>
-</ul>
-<h3 id="3-asynchronous-processing">3. Asynchronous Processing
-</h3><p>Instead of blocking a connection while waiting for a task to finish, use message queues (like Kafka). The system accepts the request immediately (improving throughput) and processes it in the background.</p>
-<h2 id="real-life-example-ticket-booking-vs-video-streaming">Real-Life Example: Ticket Booking vs. Video Streaming
-</h2><ul>
-<li><strong>Ticket Booking (IRCTC/Ticketmaster)</strong>: Low Throughput, High Consistency requirement. The bottleneck is the database lock (selling the same seat twice).</li>
-<li><strong>Video Streaming (YouTube)</strong>: High Throughput requirement. The system needs to push gigabytes of data per second to millions of users. It relies heavily on CDNs and distributed storage to achieve this massive throughput.</li>
-</ul>
+<h3 id="the-acid-trade-off">The ACID Trade-off
+</h3><p>In databases, replication introduces complexity. If you write data to Node A, it takes time to copy to Node B. This touches on the <strong>CAP Theorem</strong> (Consistency vs. Availability), which we will cover in depth later.</p>
+<h2 id="real-life-examples">Real-Life Examples
+</h2><h3 id="1-amazon-shopping-prime-day">1. Amazon Shopping (Prime Day)
+</h3><p>On Prime Day, traffic spikes 100x. Amazon uses thousands of microservices distributed across the globe. If the &ldquo;Reviews&rdquo; service crashes, you can still buy items. The system degrades gracefully rather than failing completely.</p>
+<h3 id="2-google-search">2. Google Search
+</h3><p>Google indexes the web across thousands of machines. If the specific server holding the index for &ldquo;SpaceX&rdquo; fails, a replica immediately answers your query. You, the user, never know a failure occurred.</p>
 <h2 id="conclusion">Conclusion
-</h2><p>Throughput is the capacity of your system. While Monoliths are limited by single-machine physics, Distributed Systems unlock massive throughput via Horizontal Scaling. By managing <strong>Congestion</strong> and using <strong>Load Balancers</strong>, you can build systems that handle millions of users effortlessly.</p>
+</h2><p><strong>Monoliths put all eggs in one basket.</strong> If that basket drops, you have a mess.
+<strong>Distributed Systems</strong> accept that failure is inevitable. Hard drives die, networks cut out, and power fails. By designing with <strong>Fault Tolerance</strong> and <strong>Replication</strong> in mind, we build systems that can survive the chaos of the real world.</p>
 
 </section>
 
@@ -326,11 +333,11 @@
         
             <a href="/tags/system-design/">System Design</a>
         
-            <a href="/tags/throughput/">Throughput</a>
+            <a href="/tags/availability/">Availability</a>
         
-            <a href="/tags/distributed-systems/">Distributed Systems</a>
+            <a href="/tags/fault-tolerance/">Fault Tolerance</a>
         
-            <a href="/tags/performance/">Performance</a>
+            <a href="/tags/reliability/">Reliability</a>
         
     </section>
 
@@ -352,6 +359,17 @@
             
                 
 <article class="">
+    <a href="/blogs/system-design/throughput-in-distributed-systems/">
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Throughput in Distributed Systems: The Impact of Scale</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
     <a href="/blogs/system-design/latency-in-web-applications/">
         
 
@@ -368,17 +386,6 @@
 
         <div class="article-details">
             <h2 class="article-title">Distributed Systems: Definition, Advantages, and Challenges</h2>
-        </div>
-    </a>
-</article>
-            
-                
-<article class="">
-    <a href="/blogs/system-design/availability-and-fault-tolerance/">
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Availability &amp; Fault Tolerance: Keeping the Lights On</h2>
         </div>
     </a>
 </article>
