@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=55562&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="How to distribute traffic efficiently across your servers. We cover Algorithms (Round Robin, IP Hash), Health Checks, and Active-Passive setups.">
-<title>Load Balancing: The Traffic Cop of Distributed Systems</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Your cache is full. What do you delete to make space? We explore LRU, LFU, FIFO, and why Netflix had to rethink their eviction strategy.">
+<title>Cache Eviction Strategies: What to Delete?</title>
 
-<link rel='canonical' href='http://localhost:55562/blogs/system-design/load-balancing/'>
+<link rel='canonical' href='http://localhost:55562/blogs/system-design/cache-eviction-strategies/'>
 
-<link rel="stylesheet" href="/scss/style.min.f8c0f8630bb3b8ecceb9476a9adf9801f44aa2dca566b2eeedd978695b1bb9df.css"><meta property='og:title' content="Load Balancing: The Traffic Cop of Distributed Systems">
-<meta property='og:description' content="How to distribute traffic efficiently across your servers. We cover Algorithms (Round Robin, IP Hash), Health Checks, and Active-Passive setups.">
-<meta property='og:url' content='http://localhost:55562/blogs/system-design/load-balancing/'>
+<link rel="stylesheet" href="/scss/style.min.f8c0f8630bb3b8ecceb9476a9adf9801f44aa2dca566b2eeedd978695b1bb9df.css"><meta property='og:title' content="Cache Eviction Strategies: What to Delete?">
+<meta property='og:description' content="Your cache is full. What do you delete to make space? We explore LRU, LFU, FIFO, and why Netflix had to rethink their eviction strategy.">
+<meta property='og:url' content='http://localhost:55562/blogs/system-design/cache-eviction-strategies/'>
 <meta property='og:site_name' content='Chandan Kumar Dash'>
-<meta property='og:type' content='article'><meta property='article:section' content='Blogs' /><meta property='article:tag' content='System Design' /><meta property='article:tag' content='Load Balancing' /><meta property='article:tag' content='Scalability' /><meta property='article:tag' content='High Availability' /><meta property='article:published_time' content='2026-02-08T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-02-08T00:00:00&#43;00:00'/>
-<meta name="twitter:title" content="Load Balancing: The Traffic Cop of Distributed Systems">
-<meta name="twitter:description" content="How to distribute traffic efficiently across your servers. We cover Algorithms (Round Robin, IP Hash), Health Checks, and Active-Passive setups.">
+<meta property='og:type' content='article'><meta property='article:section' content='Blogs' /><meta property='article:tag' content='System Design' /><meta property='article:tag' content='Caching' /><meta property='article:tag' content='Eviction' /><meta property='article:tag' content='LRU' /><meta property='article:tag' content='LFU' /><meta property='article:published_time' content='2026-02-08T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-02-08T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="Cache Eviction Strategies: What to Delete?">
+<meta name="twitter:description" content="Your cache is full. What do you delete to make space? We explore LRU, LFU, FIFO, and why Netflix had to rethink their eviction strategy.">
     </head>
     <body class="
     article-page
@@ -177,12 +177,12 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/blogs/system-design/load-balancing/">Load Balancing: The Traffic Cop of Distributed Systems</a>
+            <a href="/blogs/system-design/cache-eviction-strategies/">Cache Eviction Strategies: What to Delete?</a>
         </h2>
     
         
         <h3 class="article-subtitle">
-            How to distribute traffic efficiently across your servers. We cover Algorithms (Round Robin, IP Hash), Health Checks, and Active-Passive setups.
+            Your cache is full. What do you delete to make space? We explore LRU, LFU, FIFO, and why Netflix had to rethink their eviction strategy.
         </h3>
         
     </div>
@@ -235,85 +235,102 @@
     <section class="article-content">
     
     
-    <p>When you have multiple servers (Horizontal Scaling), you need a way to distribute traffic among them. Enter the <strong>Load Balancer (LB)</strong>.</p>
-<p>A Load Balancer acts as the entry point to your system. It accepts requests from clients and routes them to the appropriate backend server.</p>
-<h2 id="core-concepts">Core Concepts
-</h2><h3 id="1-virtual-ip-vip">1. Virtual IP (VIP)
-</h3><p>Clients don&rsquo;t talk to individual servers (IP1, IP2). They talk to the <strong>VIP</strong> of the Load Balancer. The LB then forwards the request internally.</p>
-<h3 id="2-health-checks">2. Health Checks
-</h3><p>The LB constantly pings your servers (&ldquo;Are you alive?&rdquo;). If a server crashes, the LB stops sending traffic to it. This ensures <strong>High Availability</strong>.</p>
-<h3 id="3-high-availability-ha-for-the-lb-itself">3. High Availability (HA) for the LB itself
-</h3><p>If the LB crashes, your whole site goes down. To prevent this, we use <strong>Redundancy</strong> (Active-Passive LB setup).</p>
+    <p>Cache memory (RAM) is fast but limited. Eventually, it gets full.
+When you need to store new data but the cache is full, you must delete old data. This is <strong>Cache Eviction</strong>.</p>
+<h2 id="the-concept-time-to-live-ttl">The Concept: Time-to-Live (TTL)
+</h2><p>Even if the cache isn&rsquo;t full, data shouldn&rsquo;t live forever.
+<strong>Time-to-Live (TTL)</strong> is a setting that automatically deletes data after a certain period (e.g., 5 minutes, 1 hour).</p>
+<h3 id="the-netflix-example">The Netflix Example
+</h3><p>Netflix used to cache subscription plans with a <strong>10-year TTL</strong>.</p>
+<ul>
+<li><strong>Problem</strong>: When they changed from 4 plans to 5 plans, users still saw the old 4 plans because the cache never expired.</li>
+<li><strong>Fix</strong>: They reduced the TTL to hours/days to ensure users see updates.</li>
+</ul>
+<h2 id="eviction-algorithms">Eviction Algorithms
+</h2><p>When the cache is full, how do we decide who gets kicked out?</p>
+<h3 id="1-least-recently-used-lru">1. Least Recently Used (LRU)
+</h3><p><strong>&ldquo;If you haven&rsquo;t used it in a while, you probably won&rsquo;t use it soon.&rdquo;</strong></p>
+<ul>
+<li><strong>How it works</strong>: Removes the item that was accessed <em>longest ago</em>.</li>
+<li><strong>Use Case</strong>: Most common strategy. Good for social media feeds (recent posts are hot, old posts are cold).</li>
+</ul>
 <pre class="mermaid">
   %%{init: {&#39;theme&#39;: &#39;dark&#39;}}%%
-graph TD
-    Client --&gt; VIP[Virtual IP]
-    VIP --&gt; LB1[Active LB]
-    VIP -.-&gt; LB2[Passive LB]
-    
-    LB1 --&gt; S1[Server 1]
-    LB1 --&gt; S2[Server 2]
-    LB1 --&gt; S3[Server 3]
-    
-    style LB1 fill:#99ff99,stroke:#333
-    style LB2 fill:#ff9999,stroke:#333
+graph LR
+    subgraph Cache [&#34;LRU Cache (Size 3)&#34;]
+        A[&#34;A (Oldest)&#34;] --&gt; B[&#34;B&#34;]
+        B --&gt; C[&#34;C (Newest)&#34;]
+    end
+    New[&#34;New Item D&#34;] -.-&gt;|Evicts A| A
+    style A fill:#ff9999,stroke:#333
+    style New fill:#99ff99,stroke:#333
 </pre>
 
-<h2 id="load-balancing-algorithms">Load Balancing Algorithms
-</h2><p>How does the LB decide which server gets the next request?</p>
-<div class="table-wrapper"><table>
+<h3 id="2-least-frequently-used-lfu">2. Least Frequently Used (LFU)
+</h3><p><strong>&ldquo;If you rarely use it, get rid of it.&rdquo;</strong></p>
+<ul>
+<li><strong>How it works</strong>: Tracks how <em>often</em> an item is accessed. Removes the one with the lowest count.</li>
+<li><strong>Use Case</strong>: Netflix (Bollywood movies might be less watched than Hollywood blockbusters globally, so Bollywood gets evicted first in US servers).</li>
+</ul>
+<h3 id="3-first-in-first-out-fifo">3. First In First Out (FIFO)
+</h3><p><strong>&ldquo;Oldest data leaves first.&rdquo;</strong></p>
+<ul>
+<li><strong>How it works</strong>: A simple queue. First item added is the first one deleted.</li>
+<li><strong>Use Case</strong>: Time-series data logs.</li>
+</ul>
+<h3 id="4-most-recently-used-mru">4. Most Recently Used (MRU)
+</h3><p><strong>&ldquo;Delete the newest item.&rdquo;</strong></p>
+<ul>
+<li><strong>Use Case</strong>: Rare. Example: &ldquo;Tinder&rdquo; (you don&rsquo;t want to see the same person you just swiped on again).</li>
+</ul>
+<h3 id="5-random-replacement">5. Random Replacement
+</h3><p><strong>&ldquo;Just delete something.&rdquo;</strong></p>
+<ul>
+<li><strong>Use Case</strong>: When you don&rsquo;t care or want to avoid overhead.</li>
+</ul>
+<h2 id="strategy-comparison">Strategy Comparison
+</h2><div class="table-wrapper"><table>
   <thead>
       <tr>
-          <th style="text-align: left">Algorithm</th>
+          <th style="text-align: left">Strategy</th>
           <th style="text-align: left">Description</th>
-          <th style="text-align: left">Use Case</th>
+          <th style="text-align: left">Best For</th>
       </tr>
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: left"><strong>Round Robin</strong></td>
-          <td style="text-align: left">Cyclic order (S1 -&gt; S2 -&gt; S3 -&gt; S1). Simple.</td>
-          <td style="text-align: left">Servers with equal specs.</td>
+          <td style="text-align: left"><strong>LRU</strong></td>
+          <td style="text-align: left">Remove oldest <em>access</em></td>
+          <td style="text-align: left">General purpose, Social Media</td>
       </tr>
       <tr>
-          <td style="text-align: left"><strong>Weighted Round Robin</strong></td>
-          <td style="text-align: left">Assigns more requests to powerful servers.</td>
-          <td style="text-align: left">Heterogeneous fleet (some big, some small servers).</td>
+          <td style="text-align: left"><strong>LFU</strong></td>
+          <td style="text-align: left">Remove lowest <em>frequency</em></td>
+          <td style="text-align: left">Content Distribution (Netflix, YouTube)</td>
       </tr>
       <tr>
-          <td style="text-align: left"><strong>Least Connections</strong></td>
-          <td style="text-align: left">Sends to the server with fewest active connections.</td>
-          <td style="text-align: left">Long-lived connections (e.g., WebSocket, Chat).</td>
+          <td style="text-align: left"><strong>FIFO</strong></td>
+          <td style="text-align: left">Remove oldest <em>insertion</em></td>
+          <td style="text-align: left">Logs, Queues</td>
       </tr>
       <tr>
-          <td style="text-align: left"><strong>Least Response Time</strong></td>
-          <td style="text-align: left">Sends to the fastest responding server.</td>
-          <td style="text-align: left">Performance-sensitive apps.</td>
+          <td style="text-align: left"><strong>MRU</strong></td>
+          <td style="text-align: left">Remove newest <em>access</em></td>
+          <td style="text-align: left">Specific looping scenarios</td>
       </tr>
       <tr>
-          <td style="text-align: left"><strong>IP Hash</strong></td>
-          <td style="text-align: left">Hashes Client IP to map to a specific server.</td>
-          <td style="text-align: left"><strong>Session Stickiness</strong> (Ensure User A always goes to Server 1).</td>
+          <td style="text-align: left"><strong>Random</strong></td>
+          <td style="text-align: left">Remove random item</td>
+          <td style="text-align: left">Low overhead needed</td>
       </tr>
   </tbody>
 </table></div>
-<h2 id="timeline-of-a-request">Timeline of a Request
-</h2><ol>
-<li><strong>Client</strong> sends request to <code>api.example.com</code> (VIP).</li>
-<li><strong>LB</strong> receives request.</li>
-<li><strong>LB</strong> checks <strong>Health Status</strong> of backend pool.</li>
-<li><strong>LB</strong> selects a server using an <strong>Algorithm</strong> (e.g., Round Robin).</li>
-<li><strong>LB</strong> forwards request to <code>Server 2</code>.</li>
-<li><code>Server 2</code> processes and responds.</li>
-</ol>
 <h2 id="conclusion">Conclusion
-</h2><p>Load Balancers are essential for scaling. They provide:</p>
+</h2><p>There is no &ldquo;perfect&rdquo; strategy.</p>
 <ul>
-<li><strong>Scalability</strong>: Add servers seamlessly.</li>
-<li><strong>Availability</strong>: Automatically bypass dead servers.</li>
-<li><strong>Flexibility</strong>: Perform maintenance on servers without downtime.</li>
+<li>For most web apps, <strong>LRU</strong> is the safe default.</li>
+<li>For content platforms (Netflix), <strong>LFU</strong> might be better to keep popular content hot.</li>
 </ul>
-<p>However, remember that the LB itself can be a bottleneck or a single point of failure if not configured with redundancy.</p>
 
 </section>
 
@@ -324,11 +341,13 @@ graph TD
         
             <a href="/tags/system-design/">System Design</a>
         
-            <a href="/tags/load-balancing/">Load Balancing</a>
+            <a href="/tags/caching/">Caching</a>
         
-            <a href="/tags/scalability/">Scalability</a>
+            <a href="/tags/eviction/">Eviction</a>
         
-            <a href="/tags/high-availability/">High Availability</a>
+            <a href="/tags/lru/">LRU</a>
+        
+            <a href="/tags/lfu/">LFU</a>
         
     </section>
 
@@ -350,33 +369,11 @@ graph TD
             
                 
 <article class="">
-    <a href="/blogs/system-design/scalability/">
+    <a href="/blogs/system-design/caching/">
         
 
         <div class="article-details">
-            <h2 class="article-title">Scalability: Vertical vs Horizontal Scaling</h2>
-        </div>
-    </a>
-</article>
-            
-                
-<article class="">
-    <a href="/blogs/system-design/distributed-systems/">
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Distributed Systems: Definition, Advantages, and Challenges</h2>
-        </div>
-    </a>
-</article>
-            
-                
-<article class="">
-    <a href="/blogs/system-design/introduction-to-system-design/">
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Introduction to System Design: Concepts, Process, and Types</h2>
+            <h2 class="article-title">Caching: The Secret to Speed</h2>
         </div>
     </a>
 </article>
@@ -394,11 +391,33 @@ graph TD
             
                 
 <article class="">
-    <a href="/blogs/system-design/cache-eviction-strategies/">
+    <a href="/blogs/system-design/consistency-in-distributed-systems/">
         
 
         <div class="article-details">
-            <h2 class="article-title">Cache Eviction Strategies: What to Delete?</h2>
+            <h2 class="article-title">Consistency in Distributed Systems: The Data Truth</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/blogs/system-design/load-balancing/">
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Load Balancing: The Traffic Cop of Distributed Systems</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/blogs/system-design/redundancy-vs-replication/">
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Redundancy vs Replication: Spot the Difference</h2>
         </div>
     </a>
 </article>
