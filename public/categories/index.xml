@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Categories on Chandan Kumar Dash</title>
-        <link>http://localhost:54612/categories/</link>
+        <link>http://localhost:1313/categories/</link>
         <description>Recent content in Categories on Chandan Kumar Dash</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sun, 08 Feb 2026 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:54612/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 08 Feb 2026 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" /><item>
             <title>System Design</title>
-            <link>http://localhost:54612/categories/system-design/</link>
+            <link>http://localhost:1313/categories/system-design/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:54612/categories/system-design/</guid>
+            <guid>http://localhost:1313/categories/system-design/</guid>
             <description></description>
         </item><item>
             <title>Data Structures</title>
-            <link>http://localhost:54612/categories/data-structures/</link>
+            <link>http://localhost:1313/categories/data-structures/</link>
             <pubDate>Sat, 31 Jan 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:54612/categories/data-structures/</guid>
+            <guid>http://localhost:1313/categories/data-structures/</guid>
             <description></description>
         </item><item>
             <title>IOS Development</title>
-            <link>http://localhost:54612/categories/ios-development/</link>
+            <link>http://localhost:1313/categories/ios-development/</link>
             <pubDate>Sat, 31 Jan 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:54612/categories/ios-development/</guid>
+            <guid>http://localhost:1313/categories/ios-development/</guid>
             <description></description>
         </item></channel>
 </rss>

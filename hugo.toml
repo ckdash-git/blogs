@@ -73,4 +73,3 @@ theme = "hugo-theme-stack"
         params = { icon = "messages" }
 
 [permalinks]
-    blogs = '/blogs/:title/'

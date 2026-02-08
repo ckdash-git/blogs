@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Why distributed systems achieve higher Throughput than Monoliths. We explore the relationship between Latency and Throughput, and how Load Balancers and CDNs optimize data flow.">
+<title>Throughput in Distributed Systems: The Impact of Scale</title>
+
+<link rel='canonical' href='http://localhost:1313/blogs/system-design/throughput-in-distributed-systems/'>
+
+<link rel="stylesheet" href="/scss/style.min.f8c0f8630bb3b8ecceb9476a9adf9801f44aa2dca566b2eeedd978695b1bb9df.css"><meta property='og:title' content="Throughput in Distributed Systems: The Impact of Scale">
+<meta property='og:description' content="Why distributed systems achieve higher Throughput than Monoliths. We explore the relationship between Latency and Throughput, and how Load Balancers and CDNs optimize data flow.">
+<meta property='og:url' content='http://localhost:1313/blogs/system-design/throughput-in-distributed-systems/'>
+<meta property='og:site_name' content='Chandan Kumar Dash'>
+<meta property='og:type' content='article'><meta property='article:section' content='Blogs' /><meta property='article:tag' content='System Design' /><meta property='article:tag' content='Throughput' /><meta property='article:tag' content='Distributed Systems' /><meta property='article:tag' content='Performance' /><meta property='article:published_time' content='2026-02-08T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-02-08T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="Throughput in Distributed Systems: The Impact of Scale">
+<meta name="twitter:description" content="Why distributed systems achieve higher Throughput than Monoliths. We explore the relationship between Latency and Throughput, and how Load Balancers and CDNs optimize data flow.">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "light");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column compact"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        <figure class="site-avatar">
+                <a href="/">
+                    <img src="/ckdash-git_17376967194752443571.jpg" 
+                        width="460"
+                        height="460"
+                        class="site-logo"
+                        loading="lazy"
+                        alt="Avatar">
+                </a>
+                
+            </figure>
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Chandan Kumar Dash</a></h1>
+            <h2 class="site-description">Software Development Engineer | Backend, Mobile - iOS, Go &amp; Flutter</h2>
+        </div>
+    </header><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/blogs/' >
+                
+                
+                
+                <span>Blogs</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/categories/' >
+                
+                
+                
+                <span>Categories</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/write-for-us/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-messages" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M21 14l-3 -3h-7a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1h9a1 1 0 0 1 1 1v10" />
+  <path d="M14 15v2a1 1 0 0 1 -1 1h-7l-3 3v-10a1 1 0 0 1 1 -1h2" />
+</svg>
+
+
+
+                
+                <span>Write for Internet</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            
+            
+            
+            <a href="/categories/system-design/" style="background-color: hsl(82, 60%, 84%); color: hsl(82, 60%, 15%);">
+                System Design
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/blogs/system-design/throughput-in-distributed-systems/">Throughput in Distributed Systems: The Impact of Scale</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            Why distributed systems achieve higher Throughput than Monoliths. We explore the relationship between Latency and Throughput, and how Load Balancers and CDNs optimize data flow.
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published" datetime='2026-02-08T00:00:00Z'>Sunday, February 8, 2026</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    3 minutes read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    
+
+    <section class="article-content">
+    
+    
+    <p>In our previous discussions, we covered <a class="link" href="/blogs/system-design/monolithic-architecture/" >Monoliths</a>, <a class="link" href="/blogs/system-design/distributed-systems/" >Distributed Systems</a>, and <a class="link" href="/blogs/system-design/latency-in-web-applications/" >Latency</a>.</p>
+<p>Today, we decode <strong>Throughput</strong> (often measured in bits per second, bps)—the measure of how much work your system can actually handle. While Latency is about &ldquo;speed,&rdquo; Throughput is about &ldquo;capacity.&rdquo;</p>
+<h2 id="what-is-throughput">What is Throughput?
+</h2><p><strong>Throughput</strong> is the amount of work (requests, data, transactions) a system can process in a given unit of time.</p>
+<ul>
+<li><strong>Latency</strong>: How long does it take to move <em>one</em> car from A to B?</li>
+<li><strong>Throughput</strong>: How many cars <em>per hour</em> can move from A to B?</li>
+</ul>
+<p>Ideally, you want <strong>High Throughput</strong> and <strong>Low Latency</strong>. However, improving one can sometimes hurt the other.</p>
+<h2 id="throughput-monolithic-vs-distributed">Throughput: Monolithic vs. Distributed
+</h2><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Feature</th>
+          <th style="text-align: left">Monolithic System</th>
+          <th style="text-align: left">Distributed System</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><strong>Resources</strong></td>
+          <td style="text-align: left">Limited to one machine (CPU/RAM cap)</td>
+          <td style="text-align: left">Virtually unlimited (Add more machines)</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Scaling</strong></td>
+          <td style="text-align: left">Vertical (Expensive, Hard limit)</td>
+          <td style="text-align: left">Horizontal (Add nodes endlessly)</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Throughput</strong></td>
+          <td style="text-align: left"><strong>Low/Capped</strong></td>
+          <td style="text-align: left"><strong>High/Uncapped</strong></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Bottleneck</strong></td>
+          <td style="text-align: left">The single server itself</td>
+          <td style="text-align: left">Network bandwidth or Database</td>
+      </tr>
+  </tbody>
+</table></div>
+<h3 id="why-distributed-systems-win-on-throughput">Why Distributed Systems Win on Throughput
+</h3><p>In a Monolith, your throughput is hard-capped by the physical limits of the server. If your server can handle 1,000 requests/sec, that&rsquo;s it.</p>
+<p>In a Distributed System, you can use <strong>Horizontal Scaling</strong>. If one server handles 1,000 req/sec, ten servers handle 10,000 req/sec.</p>
+<pre class="mermaid">
+  graph TD
+    LB[Load Balancer] --&gt; S1[Server 1]
+    LB --&gt; S2[Server 2]
+    LB --&gt; S3[Server 3]
+    S1 --&gt; DB[(Database)]
+    S2 --&gt; DB
+    S3 --&gt; DB
+    style LB fill:#f9f,stroke:#333
+</pre>
+
+<p><em>By adding Servers (S1, S2, S3&hellip;), you increase the total throughput of the system linearly.</em></p>
+<h2 id="what-kills-throughput">What Kills Throughput?
+</h2><p>Even in distributed systems, throughput isn&rsquo;t infinite. Three main factors drag it down:</p>
+<ol>
+<li><strong>Latency</strong>: If each request takes longer to process (high latency), the server is busy for longer, reducing the number of requests it can handle per second.</li>
+<li><strong>Protocol Overhead</strong>: Every network call involves handshakes (TCP/TLS) and headers. This &ldquo;administrative&rdquo; data consumes bandwidth that could be used for actual payload.</li>
+<li><strong>Congestion</strong>: When too many requests arrive at once, queues fill up. Packets get dropped, causing retries, which further clogs the system.</li>
+</ol>
+<h2 id="strategies-to-maximize-throughput">Strategies to Maximize Throughput
+</h2><p>To get the most out of your distributed system, you need to optimize the flow of data.</p>
+<h3 id="1-load-balancing">1. Load Balancing
+</h3><p>A <strong>Load Balancer</strong> sits in front of your servers and distributes traffic evenly (e.g., Round Robin). This ensures no single server is overwhelmed while others sit idle.</p>
+<h3 id="2-caching--cdns">2. Caching &amp; CDNs
+</h3><p>Serving data from a cache or <a class="link" href="/blogs/system-design/latency-in-web-applications/" >CDN</a> avoids hitting the backend servers entirely.</p>
+<ul>
+<li><strong>Real-Life Example</strong>: <strong>Netflix</strong>. By serving video chunks from a local ISP server (CDN), they offload terabytes of data from their main servers, massively increasing global throughput.</li>
+</ul>
+<h3 id="3-asynchronous-processing">3. Asynchronous Processing
+</h3><p>Instead of blocking a connection while waiting for a task to finish, use message queues (like Kafka). The system accepts the request immediately (improving throughput) and processes it in the background.</p>
+<h2 id="real-life-example-ticket-booking-vs-video-streaming">Real-Life Example: Ticket Booking vs. Video Streaming
+</h2><ul>
+<li><strong>Ticket Booking (IRCTC/Ticketmaster)</strong>: Low Throughput, High Consistency requirement. The bottleneck is the database lock (selling the same seat twice).</li>
+<li><strong>Video Streaming (YouTube)</strong>: High Throughput requirement. The system needs to push gigabytes of data per second to millions of users. It relies heavily on CDNs and distributed storage to achieve this massive throughput.</li>
+</ul>
+<h2 id="conclusion">Conclusion
+</h2><p>Throughput is the capacity of your system. While Monoliths are limited by single-machine physics, Distributed Systems unlock massive throughput via Horizontal Scaling. By managing <strong>Congestion</strong> and using <strong>Load Balancers</strong>, you can build systems that handle millions of users effortlessly.</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/system-design/">System Design</a>
+        
+            <a href="/tags/throughput/">Throughput</a>
+        
+            <a href="/tags/distributed-systems/">Distributed Systems</a>
+        
+            <a href="/tags/performance/">Performance</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/blogs/system-design/latency-in-web-applications/">
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Understanding Latency in Web Applications: Causes and Cures</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/blogs/system-design/distributed-systems/">
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Distributed Systems: Definition, Advantages, and Challenges</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/blogs/system-design/introduction-to-system-design/">
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Introduction to System Design: Concepts, Process, and Types</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/blogs/system-design/monolithic-architecture/">
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Understanding Monolithic Architecture: The &#39;All-in-One&#39; Approach</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2026 Chandan Kumar Dash
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="4.0.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+
+
+
+<script type="module">
+    import gallery from '\/ts\/gallery.js';
+
+    const articleContent = document.querySelector('.article-content');
+    const shouldLoad = articleContent && (articleContent.querySelectorAll('figure').length > 0 || articleContent.querySelectorAll('img.gallery-image').length > 0);
+    
+    if (shouldLoad) {
+        gallery(articleContent);
+
+        const PhotoSwipeLightbox = (await import("https:\/\/cdn.jsdelivr.net\/npm\/photoswipe@5.4.4\/dist\/photoswipe-lightbox.esm.min.js")).default;
+        const styleHref = "https:\/\/cdn.jsdelivr.net\/npm\/photoswipe@5.4.4\/dist\/photoswipe.css";
+
+        const styleTag = document.createElement('link');
+        styleTag.rel = 'stylesheet';
+        styleTag.href = styleHref;
+        document.head.appendChild(styleTag);
+
+        const lightbox = new PhotoSwipeLightbox({
+            gallerySelector: '.article-content',
+            childSelector: 'figure a.image-link',
+            pswpModule: () => import("https:\/\/cdn.jsdelivr.net\/npm\/photoswipe@5.4.4\/dist\/photoswipe.esm.min.js")
+        });
+        lightbox.init();
+    }
+</script>
+    
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11.12.2/+esm';
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: 'neutral',
+    });
+</script>
+
+
+            </main>
+        </div>
+        <script type="text/javascript" src="/ts/main.39cc80f12e6178a46c3da502586a5f84be9f2c349788bcc21d5180619caf76eb.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
