@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Why is your app slow? We break down Latency (T1+T2+T3), explain why Monoliths are faster than Distributed Systems, and explore solutions like Cashing and CDNs.">
+<title>Understanding Latency in Web Applications: Causes and Cures</title>
+
+<link rel='canonical' href='http://localhost:1313/blogs/understanding-latency-in-web-applications-causes-and-cures/'>
+
+<link rel="stylesheet" href="/scss/style.min.f8c0f8630bb3b8ecceb9476a9adf9801f44aa2dca566b2eeedd978695b1bb9df.css"><meta property='og:title' content="Understanding Latency in Web Applications: Causes and Cures">
+<meta property='og:description' content="Why is your app slow? We break down Latency (T1+T2+T3), explain why Monoliths are faster than Distributed Systems, and explore solutions like Cashing and CDNs.">
+<meta property='og:url' content='http://localhost:1313/blogs/understanding-latency-in-web-applications-causes-and-cures/'>
+<meta property='og:site_name' content='Chandan Kumar Dash'>
+<meta property='og:type' content='article'><meta property='article:section' content='Blogs' /><meta property='article:tag' content='System Design' /><meta property='article:tag' content='Latency' /><meta property='article:tag' content='Performance' /><meta property='article:tag' content='Optimization' /><meta property='article:published_time' content='2026-02-08T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-02-08T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="Understanding Latency in Web Applications: Causes and Cures">
+<meta name="twitter:description" content="Why is your app slow? We break down Latency (T1+T2+T3), explain why Monoliths are faster than Distributed Systems, and explore solutions like Cashing and CDNs.">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "light");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column compact"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        <figure class="site-avatar">
+                <a href="/">
+                    <img src="/ckdash-git_17376967194752443571.jpg" 
+                        width="460"
+                        height="460"
+                        class="site-logo"
+                        loading="lazy"
+                        alt="Avatar">
+                </a>
+                
+            </figure>
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Chandan Kumar Dash</a></h1>
+            <h2 class="site-description">Software Development Engineer | Backend, Mobile - iOS, Go &amp; Flutter</h2>
+        </div>
+    </header><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/blogs/' >
+                
+                
+                
+                <span>Blogs</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/categories/' >
+                
+                
+                
+                <span>Categories</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/write-for-us/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-messages" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M21 14l-3 -3h-7a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1h9a1 1 0 0 1 1 1v10" />
+  <path d="M14 15v2a1 1 0 0 1 -1 1h-7l-3 3v-10a1 1 0 0 1 1 -1h2" />
+</svg>
+
+
+
+                
+                <span>Write for Internet</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            
+            
+            
+            <a href="/categories/system-design/" style="background-color: hsl(82, 60%, 84%); color: hsl(82, 60%, 15%);">
+                System Design
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/blogs/understanding-latency-in-web-applications-causes-and-cures/">Understanding Latency in Web Applications: Causes and Cures</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            Why is your app slow? We break down Latency (T1&#43;T2&#43;T3), explain why Monoliths are faster than Distributed Systems, and explore solutions like Cashing and CDNs.
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published" datetime='2026-02-08T00:00:00Z'>Sunday, February 8, 2026</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    3 minutes read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    
+
+    <section class="article-content">
+    
+    
+    <p>Speed is a feature. In system design, <strong>Latency</strong> is the villain we are constantly fighting.</p>
+<p>In the previous post, we discussed <a class="link" href="/blogs/system-design/distributed-systems/" >Distributed Systems</a>, which provide scalability at the cost of complexity. One of the biggest costs? <strong>Latency</strong>.</p>
+<p>In this post, we&rsquo;ll dissect what latency actually is, why modern distributed architectures often make it worse, and the three main weapons we have to fight it.</p>
+<h2 id="what-is-latency">What is Latency?
+</h2><p><strong>Latency</strong> is the time it takes for a data packet to travel from one point to another. In the context of a web application, it&rsquo;s the round-trip time from the user&rsquo;s action to the application&rsquo;s response.</p>
+<h3 id="the-formula-t1--t2--t3">The Formula: T1 + T2 + T3
+</h3><p>We can break down latency into three distinct phases:</p>
+<ol>
+<li><strong>T1 (Network Delay - Request)</strong>: Time for the request to travel from User → Server.</li>
+<li><strong>T2 (Processing Delay - Computer)</strong>: Time the server takes to think and process the request.</li>
+<li><strong>T3 (Network Delay - Response)</strong>: Time for the response to travel from Server → User.</li>
+</ol>
+<p>[ \text{Total Latency} = T1 + T2 + T3 ]</p>
+<pre class="mermaid">
+  sequenceDiagram
+    participant User
+    participant Server
+    Note over User, Server: T1 (Network Delay)
+    User-&gt;&gt;Server: Request
+    Note over Server: T2 (Processing)
+    Note over Server, User: T3 (Network Delay)
+    Server--&gt;&gt;User: Response
+</pre>
+
+<h2 id="architecture-impact-monolith-vs-distributed">Architecture Impact: Monolith vs. Distributed
+</h2><p>You might think that upgrading to a &ldquo;modern&rdquo; Distributed System (microservices) would make your app faster. <strong>Often, it does the opposite.</strong></p>
+<h3 id="monolithic-architecture-low-latency">Monolithic Architecture (Low Latency)
+</h3><p>In a monolith, function calls are strictly <strong>in-memory</strong>. When the <code>OrderService</code> needs to check the <code>InventoryService</code>, it&rsquo;s just a function call.</p>
+<ul>
+<li><strong>Latency Profile</strong>: Extremely low network overhead. Mostly T2 (Processing).</li>
+</ul>
+<h3 id="distributed-architecture-high-latency">Distributed Architecture (High Latency)
+</h3><p>In a distributed system, that same check is now an <strong>HTTP request over the network</strong>.</p>
+<ul>
+<li><strong>Latency Profile</strong>: Every internal communication adds a new T1 + T3 round trip.</li>
+</ul>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Architecture</th>
+          <th style="text-align: left">Processing Delay (T2)</th>
+          <th style="text-align: left">Network Delay (T1 + T3)</th>
+          <th style="text-align: left">Overall Latency</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><strong>Monolithic</strong></td>
+          <td style="text-align: left">Standard</td>
+          <td style="text-align: left">Minimal (External only)</td>
+          <td style="text-align: left"><strong>Low</strong></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Distributed</strong></td>
+          <td style="text-align: left">Standard</td>
+          <td style="text-align: left">High (Internal + External)</td>
+          <td style="text-align: left"><strong>High</strong></td>
+      </tr>
+  </tbody>
+</table></div>
+<h2 id="how-to-reduce-latency">How to Reduce Latency
+</h2><p>Since we can&rsquo;t change the speed of Network (T1/T3) or make CPUs infinitely fast (T2), we use architectural patterns.</p>
+<h3 id="1-caching-reducing-t2">1. Caching (Reducing T2)
+</h3><p>If your application takes 500ms to calculate a report (T2), doing it every time is wasteful. <strong>Caching</strong> stores the result so the next request takes 5ms.</p>
+<ul>
+<li><strong>Real-Life Example</strong>: <strong>Twitter/X</strong>. When you load your timeline, Twitter doesn&rsquo;t query the database for every tweet. It pulls a pre-computed list from a Redis cache, making the load time instant.</li>
+</ul>
+<pre class="mermaid">
+  graph LR
+    User --&gt; Cache
+    Cache -- Hit --&gt; User
+    Cache -- Miss --&gt; Server
+    Server --&gt; Database
+</pre>
+
+<h3 id="2-content-delivery-network---cdn-reducing-t1--t3">2. Content Delivery Network - CDN (Reducing T1 + T3)
+</h3><p>If your server is in New York and your user is in Tokyo, T1 and T3 will be high because of physical distance. A <strong>CDN</strong> stores copies of your static files (images, CSS, JS) on servers all over the world.</p>
+<ul>
+<li><strong>Real-Life Example</strong>: <strong>Instagram</strong>. The photos you see aren&rsquo;t coming from a main server in the US; they are being served from a CDN edge location in your own city.</li>
+</ul>
+<h3 id="3-hardware-scaling-reducing-t2">3. Hardware Scaling (Reducing T2)
+</h3><p>Sometimes, the simplest solution is brute force. upgrading the CPU, RAM, or using faster SSDs can significantly reduce processing time.</p>
+<ul>
+<li><strong>Benefit</strong>: Easy to implement.</li>
+<li><strong>Downside</strong>: Expensive and has limits (Vertical Scaling limit).</li>
+</ul>
+<h2 id="conclusion">Conclusion
+</h2><p>Latency is the silent killer of user experience. While distributed systems offer scalability, they introduce network latency that must be managed. By understanding the <strong>T1+T2+T3</strong> formula and aggressively using <strong>Caching</strong> and <strong>CDNs</strong>, you can build systems that feel instant to your users.</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/system-design/">System Design</a>
+        
+            <a href="/tags/latency/">Latency</a>
+        
+            <a href="/tags/performance/">Performance</a>
+        
+            <a href="/tags/optimization/">Optimization</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/blogs/distributed-systems-definition-advantages-and-challenges/">
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Distributed Systems: Definition, Advantages, and Challenges</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/blogs/introduction-to-system-design-concepts-process-and-types/">
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Introduction to System Design: Concepts, Process, and Types</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/blogs/understanding-monolithic-architecture-the-all-in-one-approach/">
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Understanding Monolithic Architecture: The &#39;All-in-One&#39; Approach</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2026 Chandan Kumar Dash
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="4.0.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+
+
+
+<script type="module">
+    import gallery from '\/ts\/gallery.js';
+
+    const articleContent = document.querySelector('.article-content');
+    const shouldLoad = articleContent && (articleContent.querySelectorAll('figure').length > 0 || articleContent.querySelectorAll('img.gallery-image').length > 0);
+    
+    if (shouldLoad) {
+        gallery(articleContent);
+
+        const PhotoSwipeLightbox = (await import("https:\/\/cdn.jsdelivr.net\/npm\/photoswipe@5.4.4\/dist\/photoswipe-lightbox.esm.min.js")).default;
+        const styleHref = "https:\/\/cdn.jsdelivr.net\/npm\/photoswipe@5.4.4\/dist\/photoswipe.css";
+
+        const styleTag = document.createElement('link');
+        styleTag.rel = 'stylesheet';
+        styleTag.href = styleHref;
+        document.head.appendChild(styleTag);
+
+        const lightbox = new PhotoSwipeLightbox({
+            gallerySelector: '.article-content',
+            childSelector: 'figure a.image-link',
+            pswpModule: () => import("https:\/\/cdn.jsdelivr.net\/npm\/photoswipe@5.4.4\/dist\/photoswipe.esm.min.js")
+        });
+        lightbox.init();
+    }
+</script>
+    
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11.12.2/+esm';
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: 'neutral',
+    });
+</script>
+
+
+            </main>
+        </div>
+        <script type="text/javascript" src="/ts/main.39cc80f12e6178a46c3da502586a5f84be9f2c349788bcc21d5180619caf76eb.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

@@ -1,51 +1,105 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Tags on Chandan Kumar Dash</title>
-        <link>http://localhost:1313/tags/</link>
+        <link>http://localhost:54612/tags/</link>
         <description>Recent content in Tags on Chandan Kumar Dash</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sat, 31 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 08 Feb 2026 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:54612/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+            <title>Latency</title>
+            <link>http://localhost:54612/tags/latency/</link>
+            <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
+            <guid>http://localhost:54612/tags/latency/</guid>
+            <description></description>
+        </item><item>
+            <title>Optimization</title>
+            <link>http://localhost:54612/tags/optimization/</link>
+            <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
+            <guid>http://localhost:54612/tags/optimization/</guid>
+            <description></description>
+        </item><item>
+            <title>Performance</title>
+            <link>http://localhost:54612/tags/performance/</link>
+            <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
+            <guid>http://localhost:54612/tags/performance/</guid>
+            <description></description>
+        </item><item>
+            <title>System Design</title>
+            <link>http://localhost:54612/tags/system-design/</link>
+            <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
+            <guid>http://localhost:54612/tags/system-design/</guid>
+            <description></description>
+        </item><item>
+            <title>Architecture</title>
+            <link>http://localhost:54612/tags/architecture/</link>
+            <pubDate>Sat, 07 Feb 2026 00:00:00 +0000</pubDate>
+            <guid>http://localhost:54612/tags/architecture/</guid>
+            <description></description>
+        </item><item>
+            <title>Distributed Systems</title>
+            <link>http://localhost:54612/tags/distributed-systems/</link>
+            <pubDate>Sat, 07 Feb 2026 00:00:00 +0000</pubDate>
+            <guid>http://localhost:54612/tags/distributed-systems/</guid>
+            <description></description>
+        </item><item>
+            <title>Monolith</title>
+            <link>http://localhost:54612/tags/monolith/</link>
+            <pubDate>Sat, 07 Feb 2026 00:00:00 +0000</pubDate>
+            <guid>http://localhost:54612/tags/monolith/</guid>
+            <description></description>
+        </item><item>
+            <title>Scalability</title>
+            <link>http://localhost:54612/tags/scalability/</link>
+            <pubDate>Sat, 07 Feb 2026 00:00:00 +0000</pubDate>
+            <guid>http://localhost:54612/tags/scalability/</guid>
+            <description></description>
+        </item><item>
+            <title>Software Engineering</title>
+            <link>http://localhost:54612/tags/software-engineering/</link>
+            <pubDate>Sat, 07 Feb 2026 00:00:00 +0000</pubDate>
+            <guid>http://localhost:54612/tags/software-engineering/</guid>
+            <description></description>
+        </item><item>
             <title>CocoaPods</title>
-            <link>http://localhost:1313/tags/cocoapods/</link>
+            <link>http://localhost:54612/tags/cocoapods/</link>
             <pubDate>Sat, 31 Jan 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/cocoapods/</guid>
+            <guid>http://localhost:54612/tags/cocoapods/</guid>
             <description></description>
         </item><item>
             <title>CS Fundamentals</title>
-            <link>http://localhost:1313/tags/cs-fundamentals/</link>
+            <link>http://localhost:54612/tags/cs-fundamentals/</link>
             <pubDate>Sat, 31 Jan 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/cs-fundamentals/</guid>
+            <guid>http://localhost:54612/tags/cs-fundamentals/</guid>
             <description></description>
         </item><item>
             <title>Data Structures</title>
-            <link>http://localhost:1313/tags/data-structures/</link>
+            <link>http://localhost:54612/tags/data-structures/</link>
             <pubDate>Sat, 31 Jan 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/data-structures/</guid>
+            <guid>http://localhost:54612/tags/data-structures/</guid>
             <description></description>
         </item><item>
             <title>IOS</title>
-            <link>http://localhost:1313/tags/ios/</link>
+            <link>http://localhost:54612/tags/ios/</link>
             <pubDate>Sat, 31 Jan 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/ios/</guid>
+            <guid>http://localhost:54612/tags/ios/</guid>
             <description></description>
         </item><item>
             <title>Migration</title>
-            <link>http://localhost:1313/tags/migration/</link>
+            <link>http://localhost:54612/tags/migration/</link>
             <pubDate>Sat, 31 Jan 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/migration/</guid>
+            <guid>http://localhost:54612/tags/migration/</guid>
             <description></description>
         </item><item>
             <title>SPM</title>
-            <link>http://localhost:1313/tags/spm/</link>
+            <link>http://localhost:54612/tags/spm/</link>
             <pubDate>Sat, 31 Jan 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/spm/</guid>
+            <guid>http://localhost:54612/tags/spm/</guid>
             <description></description>
         </item><item>
             <title>Swift</title>
-            <link>http://localhost:1313/tags/swift/</link>
+            <link>http://localhost:54612/tags/swift/</link>
             <pubDate>Sat, 31 Jan 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/swift/</guid>
+            <guid>http://localhost:54612/tags/swift/</guid>
             <description></description>
         </item></channel>
 </rss>
