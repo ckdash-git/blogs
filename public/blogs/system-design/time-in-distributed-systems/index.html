@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=55562&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Why Monoliths crash hard and Distributed Systems stay alive. We explore the concepts of High Availability, Single Points of Failure (SPOF), and how Replication saves the day.">
-<title>Availability &amp; Fault Tolerance: Keeping the Lights On</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Why physical clocks fail in distributed systems and how Lamport Logical Clocks help us order events correctly.">
+<title>Time in Distributed Systems: Why Clocks Lie</title>
 
-<link rel='canonical' href='http://localhost:55562/blogs/system-design/availability-and-fault-tolerance/'>
+<link rel='canonical' href='http://localhost:55562/blogs/system-design/time-in-distributed-systems/'>
 
-<link rel="stylesheet" href="/scss/style.min.f8c0f8630bb3b8ecceb9476a9adf9801f44aa2dca566b2eeedd978695b1bb9df.css"><meta property='og:title' content="Availability & Fault Tolerance: Keeping the Lights On">
-<meta property='og:description' content="Why Monoliths crash hard and Distributed Systems stay alive. We explore the concepts of High Availability, Single Points of Failure (SPOF), and how Replication saves the day.">
-<meta property='og:url' content='http://localhost:55562/blogs/system-design/availability-and-fault-tolerance/'>
+<link rel="stylesheet" href="/scss/style.min.f8c0f8630bb3b8ecceb9476a9adf9801f44aa2dca566b2eeedd978695b1bb9df.css"><meta property='og:title' content="Time in Distributed Systems: Why Clocks Lie">
+<meta property='og:description' content="Why physical clocks fail in distributed systems and how Lamport Logical Clocks help us order events correctly.">
+<meta property='og:url' content='http://localhost:55562/blogs/system-design/time-in-distributed-systems/'>
 <meta property='og:site_name' content='Chandan Kumar Dash'>
-<meta property='og:type' content='article'><meta property='article:section' content='Blogs' /><meta property='article:tag' content='System Design' /><meta property='article:tag' content='Availability' /><meta property='article:tag' content='Fault Tolerance' /><meta property='article:tag' content='Reliability' /><meta property='article:published_time' content='2026-02-08T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-02-08T00:00:00&#43;00:00'/>
-<meta name="twitter:title" content="Availability & Fault Tolerance: Keeping the Lights On">
-<meta name="twitter:description" content="Why Monoliths crash hard and Distributed Systems stay alive. We explore the concepts of High Availability, Single Points of Failure (SPOF), and how Replication saves the day.">
+<meta property='og:type' content='article'><meta property='article:section' content='Blogs' /><meta property='article:tag' content='System Design' /><meta property='article:tag' content='Distributed Systems' /><meta property='article:tag' content='Lamport Clock' /><meta property='article:tag' content='Logical Time' /><meta property='article:published_time' content='2026-02-08T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-02-08T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="Time in Distributed Systems: Why Clocks Lie">
+<meta name="twitter:description" content="Why physical clocks fail in distributed systems and how Lamport Logical Clocks help us order events correctly.">
     </head>
     <body class="
     article-page
@@ -177,12 +177,12 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/blogs/system-design/availability-and-fault-tolerance/">Availability &amp; Fault Tolerance: Keeping the Lights On</a>
+            <a href="/blogs/system-design/time-in-distributed-systems/">Time in Distributed Systems: Why Clocks Lie</a>
         </h2>
     
         
         <h3 class="article-subtitle">
-            Why Monoliths crash hard and Distributed Systems stay alive. We explore the concepts of High Availability, Single Points of Failure (SPOF), and how Replication saves the day.
+            Why physical clocks fail in distributed systems and how Lamport Logical Clocks help us order events correctly.
         </h3>
         
     </div>
@@ -235,94 +235,65 @@
     <section class="article-content">
     
     
-    <p>Imagine it&rsquo;s the day of your board exam results. You, along with millions of other students, log in to the result portal at 10:00 AM. The site crashes. That is an <strong>Availability</strong> failure.</p>
-<p>In previous posts, we discussed <a class="link" href="/blogs/system-design/throughput-in-distributed-systems/" >Throughput</a> and <a class="link" href="/blogs/system-design/latency-in-web-applications/" >Latency</a>. Today, we tackle the most critical aspect of any production system: <strong>staying online</strong>.</p>
-<h2 id="core-concepts">Core Concepts
-</h2><h3 id="1-availability">1. Availability
-</h3><p><strong>Availability</strong> is the percentage of time a system is operational and accessible to users. It&rsquo;s often measured in &ldquo;nines&rdquo;:</p>
+    <p>In a Monolithic system, &ldquo;Time&rdquo; is easy. You ask the OS for <code>Date.now()</code>, and that is the absolute truth.
+In a Distributed System, &ldquo;Time&rdquo; is a nightmare.</p>
+<p>Common questions like &ldquo;Which event happened first?&rdquo; become remarkably hard to answer.</p>
+<h2 id="the-problem-with-physical-clocks">The Problem with Physical Clocks
+</h2><p>Distributed systems span different machines, often in different time zones (e.g., US, India, Australia). Each machine has its own <strong>Physical Clock</strong>.
+Even with NTP (Network Time Protocol), these clocks drift. One server might think it&rsquo;s <code>10:00:00.001</code> while another thinks it&rsquo;s <code>10:00:00.005</code>.</p>
+<p>This <strong>Clock Skew</strong> means you cannot rely on timestamps to order events.</p>
 <ul>
-<li><strong>99%</strong>: Down for 3.65 days/year.</li>
-<li><strong>99.99% (&ldquo;Four Nines&rdquo;)</strong>: Down for 52 minutes/year.</li>
-<li><strong>99.999% (&ldquo;Five Nines&rdquo;)</strong>: Down for 5 minutes/year.</li>
+<li><strong>Scenario</strong>: User A books a ticket at <code>10:00:01</code> (Server US). User B books the same ticket at <code>10:00:02</code> (Server India). If the India server&rsquo;s clock is 5 seconds slow, it might record the time as <code>09:59:57</code>, making it look like User B booked it first!</li>
 </ul>
-<h3 id="2-fault-tolerance">2. Fault Tolerance
-</h3><p><strong>Fault Tolerance</strong> is the ability of a system to continue operating properly in the event of the failure of some of its components.</p>
-<ul>
-<li><em>Example</em>: If one engine of an airplane fails, the plane can still fly. The plane is Fault Tolerant.</li>
-</ul>
-<h3 id="3-single-point-of-failure-spof">3. Single Point of Failure (SPOF)
-</h3><p>A part of a system that, if it fails, stops the entire system from working.</p>
-<h2 id="monoliths-vs-distributed-systems">Monoliths vs. Distributed Systems
-</h2><p>The architectural choice you make dictates your system&rsquo;s survival strategy.</p>
-<div class="table-wrapper"><table>
-  <thead>
-      <tr>
-          <th style="text-align: left">Feature</th>
-          <th style="text-align: left">Monolithic Architecture</th>
-          <th style="text-align: left">Distributed System</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td style="text-align: left"><strong>Structure</strong></td>
-          <td style="text-align: left">All-in-one bundle</td>
-          <td style="text-align: left">Modular, spread across nodes</td>
-      </tr>
-      <tr>
-          <td style="text-align: left"><strong>Failure Mode</strong></td>
-          <td style="text-align: left"><strong>SPOF</strong>: If the server crashes, everything dies.</td>
-          <td style="text-align: left"><strong>Resilient</strong>: If one node dies, others take over.</td>
-      </tr>
-      <tr>
-          <td style="text-align: left"><strong>Availability</strong></td>
-          <td style="text-align: left">Low (Requires downtime for updates/crashes)</td>
-          <td style="text-align: left">High (Zero-downtime deployments)</td>
-      </tr>
-      <tr>
-          <td style="text-align: left"><strong>Recovery</strong></td>
-          <td style="text-align: left">Reboot the entire beast</td>
-          <td style="text-align: left">Automatic failover</td>
-      </tr>
-  </tbody>
-</table></div>
+<h2 id="ideally-partial-ordering">Ideally: Partial Ordering
+</h2><p>We don&rsquo;t need to know the <em>exact</em> time. We just need to know the <strong>Order of Events</strong>.
+This is called the <strong>Happened-Before Relationship</strong>.</p>
+<h2 id="the-solution-lamport-logical-clocks">The Solution: Lamport Logical Clocks
+</h2><p>Leslie Lamport introduced a simple algorithm to solve this using <strong>Logical Counters</strong> instead of real time.</p>
+<h3 id="the-algorithm">The Algorithm
+</h3><p>Every process maintains a counter <code>C</code>, initially <code>0</code>.</p>
+<ol>
+<li><strong>Internal Event</strong>: Before executing an event, increment <code>C = C + 1</code>.</li>
+<li><strong>Send Message</strong>: Increment <code>C = C + 1</code> and send <code>C</code> along with the message.</li>
+<li><strong>Receive Message</strong>: When receiving a message with counter <code>C_msg</code>, update your local counter: <code>C = max(C, C_msg) + 1</code>.</li>
+</ol>
+<h3 id="visualizing-the-flow">Visualizing the Flow
+</h3><p>Let&rsquo;s look at three processes (P1, P2, P3) interacting. Notice how P2&rsquo;s clock jumps forward when it receives a message from P3.</p>
 <pre class="mermaid">
-  graph TD
-    subgraph Monolith [Monolithic System - SPOF]
-        User1[User] --&gt; Server[Single Server]
-        Server -.-&gt; Crash[X Crash]
-        Crash -.-&gt; Down[System Offline]
-        style Server fill:#ff9999
-    end
-
-    subgraph Distributed [Distributed System - Fault Tolerant]
-        User2[User] --&gt; LB[Load Balancer]
-        LB --&gt; NodeA[Node A]
-        LB --&gt; NodeB[Node B]
-        NodeA -.-&gt; Fail[X Fail]
-        LB ==Failover==&gt; NodeB
-        style NodeA fill:#ff9999
-        style NodeB fill:#99ff99
-    end
+  %%{init: {&#39;theme&#39;: &#39;dark&#39;}}%%
+sequenceDiagram
+    participant P1
+    participant P2
+    participant P3
+    
+    Note over P1,P3: Initial State: All Clocks = 0
+    
+    P1-&gt;&gt;P1: Event A (C=1)
+    P2-&gt;&gt;P2: Event B (C=1)
+    
+    P1-&gt;&gt;P2: Message (C=2)
+    Note right of P2: P2 receives C=2.&lt;br/&gt;max(1, 2) + 1 = 3
+    P2-&gt;&gt;P2: Event C (C=3)
+    
+    P3-&gt;&gt;P3: Event D (C=1)
+    P3-&gt;&gt;P2: Message (C=2)
+    Note right of P2: P2 receives C=2.&lt;br/&gt;max(3, 2) + 1 = 4
+    P2-&gt;&gt;P2: Event E (C=4)
+    
+    P2-&gt;&gt;P1: Message (C=5)
+    Note left of P1: P1 receives C=5.&lt;br/&gt;max(1, 5) + 1 = 6
+    P1-&gt;&gt;P1: Event F (C=6)
 </pre>
 
-<h2 id="the-secret-sauce-replication">The Secret Sauce: Replication
-</h2><p>How do distributed systems achieve high availability? <strong>Redundancy</strong>.</p>
-<p>We don&rsquo;t just rely on one server. We <strong>Replicate</strong> everything.</p>
-<ol>
-<li><strong>Application Replication</strong>: Run the same code on 10 different servers. If 3 crash, 7 are still running.</li>
-<li><strong>Data Replication</strong>: Store your user data on a primary database and sync it to a standby replica. If the primary burns down, the standby takes over.</li>
-<li><strong>Geographic Replication</strong>: Don&rsquo;t put all servers in one data center. If the entire underlying power grid of a region fails, your app typically keeps running from a different region.</li>
-</ol>
-<h3 id="the-acid-trade-off">The ACID Trade-off
-</h3><p>In databases, replication introduces complexity. If you write data to Node A, it takes time to copy to Node B. This touches on the <strong>CAP Theorem</strong> (Consistency vs. Availability), which we will cover in depth later.</p>
-<h2 id="real-life-examples">Real-Life Examples
-</h2><h3 id="1-amazon-shopping-prime-day">1. Amazon Shopping (Prime Day)
-</h3><p>On Prime Day, traffic spikes 100x. Amazon uses thousands of microservices distributed across the globe. If the &ldquo;Reviews&rdquo; service crashes, you can still buy items. The system degrades gracefully rather than failing completely.</p>
-<h3 id="2-google-search">2. Google Search
-</h3><p>Google indexes the web across thousands of machines. If the specific server holding the index for &ldquo;SpaceX&rdquo; fails, a replica immediately answers your query. You, the user, never know a failure occurred.</p>
+<h3 id="what-this-tells-us">What This Tells Us
+</h3><ul>
+<li>If event <code>A</code> caused event <code>B</code>, then <code>Clock(A) &lt; Clock(B)</code>.</li>
+<li>This gives us a <strong>Partial Ordering</strong> of events.</li>
+<li>It does <strong>not</strong> give us real time (duration), but it ensures causality is respected.</li>
+</ul>
 <h2 id="conclusion">Conclusion
-</h2><p><strong>Monoliths put all eggs in one basket.</strong> If that basket drops, you have a mess.
-<strong>Distributed Systems</strong> accept that failure is inevitable. Hard drives die, networks cut out, and power fails. By designing with <strong>Fault Tolerance</strong> and <strong>Replication</strong> in mind, we build systems that can survive the chaos of the real world.</p>
+</h2><p>In Distributed Systems, <strong>Logical Time &gt; Physical Time</strong>.
+Tools like <strong>Lamport Clocks</strong> and <strong>Vector Clocks</strong> (an immense improvement on Lamport) are the bedrock of systems like Amazon Dynamo, Cassandra, and Google Spanner. They allow us to agree on the sequence of events without needing atomic clocks in every server.</p>
 
 </section>
 
@@ -333,11 +304,11 @@
         
             <a href="/tags/system-design/">System Design</a>
         
-            <a href="/tags/availability/">Availability</a>
+            <a href="/tags/distributed-systems/">Distributed Systems</a>
         
-            <a href="/tags/fault-tolerance/">Fault Tolerance</a>
+            <a href="/tags/lamport-clock/">Lamport Clock</a>
         
-            <a href="/tags/reliability/">Reliability</a>
+            <a href="/tags/logical-time/">Logical Time</a>
         
     </section>
 
@@ -356,17 +327,6 @@
     <h2 class="section-title">Related content</h2>
     <div class="related-content">
         <div class="flex article-list--tile">
-            
-                
-<article class="">
-    <a href="/blogs/system-design/consistency-in-distributed-systems/">
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Consistency in Distributed Systems: The Data Truth</h2>
-        </div>
-    </a>
-</article>
             
                 
 <article class="">
@@ -392,22 +352,33 @@
             
                 
 <article class="">
-    <a href="/blogs/system-design/time-in-distributed-systems/">
+    <a href="/blogs/system-design/distributed-systems/">
         
 
         <div class="article-details">
-            <h2 class="article-title">Time in Distributed Systems: Why Clocks Lie</h2>
+            <h2 class="article-title">Distributed Systems: Definition, Advantages, and Challenges</h2>
         </div>
     </a>
 </article>
             
                 
 <article class="">
-    <a href="/blogs/system-design/latency-in-web-applications/">
+    <a href="/blogs/system-design/availability-and-fault-tolerance/">
         
 
         <div class="article-details">
-            <h2 class="article-title">Understanding Latency in Web Applications: Causes and Cures</h2>
+            <h2 class="article-title">Availability &amp; Fault Tolerance: Keeping the Lights On</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/blogs/system-design/consistency-in-distributed-systems/">
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Consistency in Distributed Systems: The Data Truth</h2>
         </div>
     </a>
 </article>
