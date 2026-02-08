@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=55562&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Why Monoliths crash hard and Distributed Systems stay alive. We explore the concepts of High Availability, Single Points of Failure (SPOF), and how Replication saves the day.">
-<title>Availability &amp; Fault Tolerance: Keeping the Lights On</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Consistency, Availability, Partition Tolerance. Pick two. We explore the ultimate trade-off in distributed systems and why 'P' is not optional.">
+<title>The CAP Theorem: You Can&#39;t Have It All</title>
 
-<link rel='canonical' href='http://localhost:55562/blogs/system-design/availability-and-fault-tolerance/'>
+<link rel='canonical' href='http://localhost:55562/blogs/system-design/cap-theorem/'>
 
-<link rel="stylesheet" href="/scss/style.min.f8c0f8630bb3b8ecceb9476a9adf9801f44aa2dca566b2eeedd978695b1bb9df.css"><meta property='og:title' content="Availability & Fault Tolerance: Keeping the Lights On">
-<meta property='og:description' content="Why Monoliths crash hard and Distributed Systems stay alive. We explore the concepts of High Availability, Single Points of Failure (SPOF), and how Replication saves the day.">
-<meta property='og:url' content='http://localhost:55562/blogs/system-design/availability-and-fault-tolerance/'>
+<link rel="stylesheet" href="/scss/style.min.f8c0f8630bb3b8ecceb9476a9adf9801f44aa2dca566b2eeedd978695b1bb9df.css"><meta property='og:title' content="The CAP Theorem: You Can't Have It All">
+<meta property='og:description' content="Consistency, Availability, Partition Tolerance. Pick two. We explore the ultimate trade-off in distributed systems and why 'P' is not optional.">
+<meta property='og:url' content='http://localhost:55562/blogs/system-design/cap-theorem/'>
 <meta property='og:site_name' content='Chandan Kumar Dash'>
-<meta property='og:type' content='article'><meta property='article:section' content='Blogs' /><meta property='article:tag' content='System Design' /><meta property='article:tag' content='Availability' /><meta property='article:tag' content='Fault Tolerance' /><meta property='article:tag' content='Reliability' /><meta property='article:published_time' content='2026-02-08T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-02-08T00:00:00&#43;00:00'/>
-<meta name="twitter:title" content="Availability & Fault Tolerance: Keeping the Lights On">
-<meta name="twitter:description" content="Why Monoliths crash hard and Distributed Systems stay alive. We explore the concepts of High Availability, Single Points of Failure (SPOF), and how Replication saves the day.">
+<meta property='og:type' content='article'><meta property='article:section' content='Blogs' /><meta property='article:tag' content='System Design' /><meta property='article:tag' content='CAP Theorem' /><meta property='article:tag' content='Distributed Systems' /><meta property='article:tag' content='Database' /><meta property='article:published_time' content='2026-02-08T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-02-08T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="The CAP Theorem: You Can't Have It All">
+<meta name="twitter:description" content="Consistency, Availability, Partition Tolerance. Pick two. We explore the ultimate trade-off in distributed systems and why 'P' is not optional.">
     </head>
     <body class="
     article-page
@@ -177,12 +177,12 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/blogs/system-design/availability-and-fault-tolerance/">Availability &amp; Fault Tolerance: Keeping the Lights On</a>
+            <a href="/blogs/system-design/cap-theorem/">The CAP Theorem: You Can&#39;t Have It All</a>
         </h2>
     
         
         <h3 class="article-subtitle">
-            Why Monoliths crash hard and Distributed Systems stay alive. We explore the concepts of High Availability, Single Points of Failure (SPOF), and how Replication saves the day.
+            Consistency, Availability, Partition Tolerance. Pick two. We explore the ultimate trade-off in distributed systems and why &#39;P&#39; is not optional.
         </h3>
         
     </div>
@@ -235,94 +235,95 @@
     <section class="article-content">
     
     
-    <p>Imagine it&rsquo;s the day of your board exam results. You, along with millions of other students, log in to the result portal at 10:00 AM. The site crashes. That is an <strong>Availability</strong> failure.</p>
-<p>In previous posts, we discussed <a class="link" href="/blogs/system-design/throughput-in-distributed-systems/" >Throughput</a> and <a class="link" href="/blogs/system-design/latency-in-web-applications/" >Latency</a>. Today, we tackle the most critical aspect of any production system: <strong>staying online</strong>.</p>
-<h2 id="core-concepts">Core Concepts
-</h2><h3 id="1-availability">1. Availability
-</h3><p><strong>Availability</strong> is the percentage of time a system is operational and accessible to users. It&rsquo;s often measured in &ldquo;nines&rdquo;:</p>
+    <p>In distributed systems, there is no free lunch. The <strong>CAP Theorem</strong> (Brewer&rsquo;s Theorem) states that a distributed data store can effectively provide only <strong>two</strong> of the following three guarantees:</p>
+<ol>
+<li><strong>Consistency (C)</strong></li>
+<li><strong>Availability (A)</strong></li>
+<li><strong>Partition Tolerance (P)</strong></li>
+</ol>
+<h2 id="the-three-pillars">The Three Pillars
+</h2><h3 id="1-consistency-c">1. Consistency (C)
+</h3><p><strong>Every read receives the most recent write or an error.</strong></p>
 <ul>
-<li><strong>99%</strong>: Down for 3.65 days/year.</li>
-<li><strong>99.99% (&ldquo;Four Nines&rdquo;)</strong>: Down for 52 minutes/year.</li>
-<li><strong>99.999% (&ldquo;Five Nines&rdquo;)</strong>: Down for 5 minutes/year.</li>
+<li><em>Analogy</em>: If you update your status on Facebook on your phone, your friend on their laptop should see the new status immediately. If they see the old one, the system is <strong>Inconsistent</strong>.</li>
 </ul>
-<h3 id="2-fault-tolerance">2. Fault Tolerance
-</h3><p><strong>Fault Tolerance</strong> is the ability of a system to continue operating properly in the event of the failure of some of its components.</p>
+<h3 id="2-availability-a">2. Availability (A)
+</h3><p><strong>Every request receives a (non-error) response, without the guarantee that it contains the most recent write.</strong></p>
 <ul>
-<li><em>Example</em>: If one engine of an airplane fails, the plane can still fly. The plane is Fault Tolerant.</li>
+<li><em>Analogy</em>: Even if the network is flaky, Amazon should allow you to add items to your cart. It’s better to sell the item and sync later than to show a &ldquo;System Offline&rdquo; error.</li>
 </ul>
-<h3 id="3-single-point-of-failure-spof">3. Single Point of Failure (SPOF)
-</h3><p>A part of a system that, if it fails, stops the entire system from working.</p>
-<h2 id="monoliths-vs-distributed-systems">Monoliths vs. Distributed Systems
-</h2><p>The architectural choice you make dictates your system&rsquo;s survival strategy.</p>
-<div class="table-wrapper"><table>
+<h3 id="3-partition-tolerance-p">3. Partition Tolerance (P)
+</h3><p><strong>The system continues to operate despite an arbitrary number of messages being dropped or delayed by the network between nodes.</strong></p>
+<ul>
+<li><em>Analogy</em>: If the cable connecting the US and Europe servers is cut, the system should still work.</li>
+</ul>
+<h2 id="the-reality-p-is-not-optional">The Reality: P is Not Optional
+</h2><p>In a Distributed System, network failures (Partitions) are inevitable. You cannot choose &ldquo;CA&rdquo; (Consistency + Availability) because that implies your network will never fail, which is impossible.</p>
+<p><strong>Therefore, the real choice is between CP and AP.</strong></p>
+<h3 id="cp-consistency--partition-tolerance">CP (Consistency + Partition Tolerance)
+</h3><ul>
+<li><strong>Philosophy</strong>: &ldquo;Better to return Error than Wrong Data.&rdquo;</li>
+<li><strong>Behavior</strong>: When a partition occurs, the system stops accepting writes to preserve consistency.</li>
+<li><strong>Use Case</strong>: <strong>Banking</strong>, <strong>ATM</strong>. You cannot allow two peole to withdraw the same $100 if the ATMs lose connection. The ATM simply says &ldquo;Out of Service&rdquo; (Sacrificing Availability).</li>
+</ul>
+<h3 id="ap-availability--partition-tolerance">AP (Availability + Partition Tolerance)
+</h3><ul>
+<li><strong>Philosophy</strong>: &ldquo;The Show Must Go On.&rdquo;</li>
+<li><strong>Behavior</strong>: When a partition occurs, nodes continue to accept writes and serve stale data. They sync up when the partition heals.</li>
+<li><strong>Use Case</strong>: <strong>Social Media</strong>, <strong>Shopping Carts</strong>. If Instagram cannot sync your latest photo globally, it will still show your profile. It stays Available, even if Inconsistent.</li>
+</ul>
+<pre class="mermaid">
+  graph TD
+    subgraph CP [CP System - Banking]
+        A[ATM 1] -. X .- B[Bank Database]
+        linkStyle 0 stroke-width:2px,fill:none,stroke:red;
+        User1[User] --&gt; A
+        A -- &#34;Service Unavailable&#34; --&gt; User1
+    end
+    
+    subgraph AP [AP System - Social Media]
+        C[Server 1] -. X .- D[Server 2]
+        linkStyle 3 stroke-width:2px,fill:none,stroke:red;
+        User2[User] --&gt; C
+        C -- &#34;Here is older data&#34; --&gt; User2
+        %% Note: C Accepts Writes locally
+    end
+</pre>
+
+<h2 id="summary-table">Summary Table
+</h2><div class="table-wrapper"><table>
   <thead>
       <tr>
-          <th style="text-align: left">Feature</th>
-          <th style="text-align: left">Monolithic Architecture</th>
-          <th style="text-align: left">Distributed System</th>
+          <th style="text-align: left">Choice</th>
+          <th style="text-align: left">Trade-off</th>
+          <th style="text-align: left">Example</th>
       </tr>
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: left"><strong>Structure</strong></td>
-          <td style="text-align: left">All-in-one bundle</td>
-          <td style="text-align: left">Modular, spread across nodes</td>
+          <td style="text-align: left"><strong>CA</strong></td>
+          <td style="text-align: left">No Partition Tolerance</td>
+          <td style="text-align: left"><strong>RDBMS (MySQL)</strong> (Single Node)</td>
       </tr>
       <tr>
-          <td style="text-align: left"><strong>Failure Mode</strong></td>
-          <td style="text-align: left"><strong>SPOF</strong>: If the server crashes, everything dies.</td>
-          <td style="text-align: left"><strong>Resilient</strong>: If one node dies, others take over.</td>
+          <td style="text-align: left"><strong>CP</strong></td>
+          <td style="text-align: left">Sacrifice Availability</td>
+          <td style="text-align: left"><strong>MongoDB, HMAC</strong> (Banking)</td>
       </tr>
       <tr>
-          <td style="text-align: left"><strong>Availability</strong></td>
-          <td style="text-align: left">Low (Requires downtime for updates/crashes)</td>
-          <td style="text-align: left">High (Zero-downtime deployments)</td>
-      </tr>
-      <tr>
-          <td style="text-align: left"><strong>Recovery</strong></td>
-          <td style="text-align: left">Reboot the entire beast</td>
-          <td style="text-align: left">Automatic failover</td>
+          <td style="text-align: left"><strong>AP</strong></td>
+          <td style="text-align: left">Sacrifice Consistency</td>
+          <td style="text-align: left"><strong>Cassandra, DynamoDB</strong> (Social Media)</td>
       </tr>
   </tbody>
 </table></div>
-<pre class="mermaid">
-  graph TD
-    subgraph Monolith [Monolithic System - SPOF]
-        User1[User] --&gt; Server[Single Server]
-        Server -.-&gt; Crash[X Crash]
-        Crash -.-&gt; Down[System Offline]
-        style Server fill:#ff9999
-    end
-
-    subgraph Distributed [Distributed System - Fault Tolerant]
-        User2[User] --&gt; LB[Load Balancer]
-        LB --&gt; NodeA[Node A]
-        LB --&gt; NodeB[Node B]
-        NodeA -.-&gt; Fail[X Fail]
-        LB ==Failover==&gt; NodeB
-        style NodeA fill:#ff9999
-        style NodeB fill:#99ff99
-    end
-</pre>
-
-<h2 id="the-secret-sauce-replication">The Secret Sauce: Replication
-</h2><p>How do distributed systems achieve high availability? <strong>Redundancy</strong>.</p>
-<p>We don&rsquo;t just rely on one server. We <strong>Replicate</strong> everything.</p>
-<ol>
-<li><strong>Application Replication</strong>: Run the same code on 10 different servers. If 3 crash, 7 are still running.</li>
-<li><strong>Data Replication</strong>: Store your user data on a primary database and sync it to a standby replica. If the primary burns down, the standby takes over.</li>
-<li><strong>Geographic Replication</strong>: Don&rsquo;t put all servers in one data center. If the entire underlying power grid of a region fails, your app typically keeps running from a different region.</li>
-</ol>
-<h3 id="the-acid-trade-off">The ACID Trade-off
-</h3><p>In databases, replication introduces complexity. If you write data to Node A, it takes time to copy to Node B. This touches on the <strong>CAP Theorem</strong> (Consistency vs. Availability), which we will cover in depth later.</p>
-<h2 id="real-life-examples">Real-Life Examples
-</h2><h3 id="1-amazon-shopping-prime-day">1. Amazon Shopping (Prime Day)
-</h3><p>On Prime Day, traffic spikes 100x. Amazon uses thousands of microservices distributed across the globe. If the &ldquo;Reviews&rdquo; service crashes, you can still buy items. The system degrades gracefully rather than failing completely.</p>
-<h3 id="2-google-search">2. Google Search
-</h3><p>Google indexes the web across thousands of machines. If the specific server holding the index for &ldquo;SpaceX&rdquo; fails, a replica immediately answers your query. You, the user, never know a failure occurred.</p>
 <h2 id="conclusion">Conclusion
-</h2><p><strong>Monoliths put all eggs in one basket.</strong> If that basket drops, you have a mess.
-<strong>Distributed Systems</strong> accept that failure is inevitable. Hard drives die, networks cut out, and power fails. By designing with <strong>Fault Tolerance</strong> and <strong>Replication</strong> in mind, we build systems that can survive the chaos of the real world.</p>
+</h2><p>The CAP Theorem forces you to decide what matters more to your business.</p>
+<ul>
+<li>If losing a transaction means legal trouble (Money), choose <strong>CP</strong>.</li>
+<li>If downtime means losing customers (Retail/Social), choose <strong>AP</strong>.</li>
+</ul>
+<p>There is no &ldquo;best&rdquo; architecture, only the right one for your specific problem.</p>
 
 </section>
 
@@ -333,11 +334,11 @@
         
             <a href="/tags/system-design/">System Design</a>
         
-            <a href="/tags/availability/">Availability</a>
+            <a href="/tags/cap-theorem/">CAP Theorem</a>
         
-            <a href="/tags/fault-tolerance/">Fault Tolerance</a>
+            <a href="/tags/distributed-systems/">Distributed Systems</a>
         
-            <a href="/tags/reliability/">Reliability</a>
+            <a href="/tags/database/">Database</a>
         
     </section>
 
@@ -370,17 +371,6 @@
             
                 
 <article class="">
-    <a href="/blogs/system-design/cap-theorem/">
-        
-
-        <div class="article-details">
-            <h2 class="article-title">The CAP Theorem: You Can&#39;t Have It All</h2>
-        </div>
-    </a>
-</article>
-            
-                
-<article class="">
     <a href="/blogs/system-design/throughput-in-distributed-systems/">
         
 
@@ -392,22 +382,33 @@
             
                 
 <article class="">
-    <a href="/blogs/system-design/latency-in-web-applications/">
+    <a href="/blogs/system-design/distributed-systems/">
         
 
         <div class="article-details">
-            <h2 class="article-title">Understanding Latency in Web Applications: Causes and Cures</h2>
+            <h2 class="article-title">Distributed Systems: Definition, Advantages, and Challenges</h2>
         </div>
     </a>
 </article>
             
                 
 <article class="">
-    <a href="/blogs/system-design/distributed-systems/">
+    <a href="/blogs/system-design/availability-and-fault-tolerance/">
         
 
         <div class="article-details">
-            <h2 class="article-title">Distributed Systems: Definition, Advantages, and Challenges</h2>
+            <h2 class="article-title">Availability &amp; Fault Tolerance: Keeping the Lights On</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/blogs/system-design/latency-in-web-applications/">
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Understanding Latency in Web Applications: Causes and Cures</h2>
         </div>
     </a>
 </article>
