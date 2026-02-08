@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=55562&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Consistency, Availability, Partition Tolerance. Pick two. We explore the ultimate trade-off in distributed systems and why 'P' is not optional.">
-<title>The CAP Theorem: You Can&#39;t Have It All</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Why can't we just store everything in text files? We explore the major challenges: Inconsistency, Security, and Redundancy.">
+<title>The File-Based Storage Nightmare</title>
 
-<link rel='canonical' href='http://localhost:55562/blogs/system-design/cap-theorem/'>
+<link rel='canonical' href='http://localhost:55562/blogs/system-design/file-based-storage/'>
 
-<link rel="stylesheet" href="/scss/style.min.f8c0f8630bb3b8ecceb9476a9adf9801f44aa2dca566b2eeedd978695b1bb9df.css"><meta property='og:title' content="The CAP Theorem: You Can't Have It All">
-<meta property='og:description' content="Consistency, Availability, Partition Tolerance. Pick two. We explore the ultimate trade-off in distributed systems and why 'P' is not optional.">
-<meta property='og:url' content='http://localhost:55562/blogs/system-design/cap-theorem/'>
+<link rel="stylesheet" href="/scss/style.min.f8c0f8630bb3b8ecceb9476a9adf9801f44aa2dca566b2eeedd978695b1bb9df.css"><meta property='og:title' content="The File-Based Storage Nightmare">
+<meta property='og:description' content="Why can't we just store everything in text files? We explore the major challenges: Inconsistency, Security, and Redundancy.">
+<meta property='og:url' content='http://localhost:55562/blogs/system-design/file-based-storage/'>
 <meta property='og:site_name' content='Chandan Kumar Dash'>
-<meta property='og:type' content='article'><meta property='article:section' content='Blogs' /><meta property='article:tag' content='System Design' /><meta property='article:tag' content='CAP Theorem' /><meta property='article:tag' content='Distributed Systems' /><meta property='article:tag' content='Database' /><meta property='article:published_time' content='2026-02-08T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-02-08T00:00:00&#43;00:00'/>
-<meta name="twitter:title" content="The CAP Theorem: You Can't Have It All">
-<meta name="twitter:description" content="Consistency, Availability, Partition Tolerance. Pick two. We explore the ultimate trade-off in distributed systems and why 'P' is not optional.">
+<meta property='og:type' content='article'><meta property='article:section' content='Blogs' /><meta property='article:tag' content='System Design' /><meta property='article:tag' content='Database' /><meta property='article:tag' content='DBMS' /><meta property='article:tag' content='File System' /><meta property='article:published_time' content='2026-02-08T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-02-08T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="The File-Based Storage Nightmare">
+<meta name="twitter:description" content="Why can't we just store everything in text files? We explore the major challenges: Inconsistency, Security, and Redundancy.">
     </head>
     <body class="
     article-page
@@ -177,12 +177,12 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/blogs/system-design/cap-theorem/">The CAP Theorem: You Can&#39;t Have It All</a>
+            <a href="/blogs/system-design/file-based-storage/">The File-Based Storage Nightmare</a>
         </h2>
     
         
         <h3 class="article-subtitle">
-            Consistency, Availability, Partition Tolerance. Pick two. We explore the ultimate trade-off in distributed systems and why &#39;P&#39; is not optional.
+            Why can&#39;t we just store everything in text files? We explore the major challenges: Inconsistency, Security, and Redundancy.
         </h3>
         
     </div>
@@ -218,7 +218,7 @@
 
 
                 <time class="article-time--reading">
-                    3 minutes read
+                    2 minutes read
                 </time>
             </div>
         
@@ -235,95 +235,52 @@
     <section class="article-content">
     
     
-    <p>In distributed systems, there is no free lunch. The <strong>CAP Theorem</strong> (Brewer&rsquo;s Theorem) states that a distributed data store can effectively provide only <strong>two</strong> of the following three guarantees:</p>
-<ol>
-<li><strong>Consistency (C)</strong></li>
-<li><strong>Availability (A)</strong></li>
-<li><strong>Partition Tolerance (P)</strong></li>
-</ol>
-<h2 id="the-three-pillars">The Three Pillars
-</h2><h3 id="1-consistency-c">1. Consistency (C)
-</h3><p><strong>Every read receives the most recent write or an error.</strong></p>
+    <p>Before databases (DBMS) ruled the world, we had <strong>File-Based Storage Systems</strong>.
+Essentially, data was stored in folders and text files. While simple, it falls apart quickly at scale.</p>
+<h2 id="what-is-a-file-based-system">What is a File-Based System?
+</h2><p>Imagine storing college student records in a folder structure:</p>
 <ul>
-<li><em>Analogy</em>: If you update your status on Facebook on your phone, your friend on their laptop should see the new status immediately. If they see the old one, the system is <strong>Inconsistent</strong>.</li>
+<li><code>Folder: Computer Science</code> -&gt; <code>File: Ram.txt</code></li>
+<li><code>Folder: Electrical Engineering</code> -&gt; <code>File: Shyam.txt</code></li>
 </ul>
-<h3 id="2-availability-a">2. Availability (A)
-</h3><p><strong>Every request receives a (non-error) response, without the guarantee that it contains the most recent write.</strong></p>
+<h2 id="the-4-major-challenges">The 4 Major Challenges
+</h2><h3 id="1-data-redundancy">1. Data Redundancy
+</h3><p>The same data is stored in multiple places.</p>
 <ul>
-<li><em>Analogy</em>: Even if the network is flaky, Amazon should allow you to add items to your cart. It’s better to sell the item and sync later than to show a &ldquo;System Offline&rdquo; error.</li>
+<li><strong>Example</strong>: &ldquo;Ram&rdquo; takes both CS and Math classes. His address is stored in <code>CS/Ram.txt</code> AND <code>Math/Ram.txt</code>.</li>
+<li><strong>Result</strong>: Wasted storage.</li>
 </ul>
-<h3 id="3-partition-tolerance-p">3. Partition Tolerance (P)
-</h3><p><strong>The system continues to operate despite an arbitrary number of messages being dropped or delayed by the network between nodes.</strong></p>
+<h3 id="2-data-inconsistency">2. Data Inconsistency
+</h3><p>Since data is duplicated, updates might fail on one copy.</p>
 <ul>
-<li><em>Analogy</em>: If the cable connecting the US and Europe servers is cut, the system should still work.</li>
-</ul>
-<h2 id="the-reality-p-is-not-optional">The Reality: P is Not Optional
-</h2><p>In a Distributed System, network failures (Partitions) are inevitable. You cannot choose &ldquo;CA&rdquo; (Consistency + Availability) because that implies your network will never fail, which is impossible.</p>
-<p><strong>Therefore, the real choice is between CP and AP.</strong></p>
-<h3 id="cp-consistency--partition-tolerance">CP (Consistency + Partition Tolerance)
-</h3><ul>
-<li><strong>Philosophy</strong>: &ldquo;Better to return Error than Wrong Data.&rdquo;</li>
-<li><strong>Behavior</strong>: When a partition occurs, the system stops accepting writes to preserve consistency.</li>
-<li><strong>Use Case</strong>: <strong>Banking</strong>, <strong>ATM</strong>. You cannot allow two peole to withdraw the same $100 if the ATMs lose connection. The ATM simply says &ldquo;Out of Service&rdquo; (Sacrificing Availability).</li>
-</ul>
-<h3 id="ap-availability--partition-tolerance">AP (Availability + Partition Tolerance)
-</h3><ul>
-<li><strong>Philosophy</strong>: &ldquo;The Show Must Go On.&rdquo;</li>
-<li><strong>Behavior</strong>: When a partition occurs, nodes continue to accept writes and serve stale data. They sync up when the partition heals.</li>
-<li><strong>Use Case</strong>: <strong>Social Media</strong>, <strong>Shopping Carts</strong>. If Instagram cannot sync your latest photo globally, it will still show your profile. It stays Available, even if Inconsistent.</li>
+<li><strong>Scenario</strong>: Ram moves to a new house. You update <code>CS/Ram.txt</code> but forget <code>Math/Ram.txt</code>.</li>
+<li><strong>Result</strong>: The system has two different addresses for the same person. Which one is true?</li>
 </ul>
 <pre class="mermaid">
-  graph TD
-    subgraph CP [CP System - Banking]
-        A[ATM 1] -. X .- B[Bank Database]
-        linkStyle 0 stroke-width:2px,fill:none,stroke:red;
-        User1[User] --&gt; A
-        A -- &#34;Service Unavailable&#34; --&gt; User1
-    end
-    
-    subgraph AP [AP System - Social Media]
-        C[Server 1] -. X .- D[Server 2]
-        linkStyle 3 stroke-width:2px,fill:none,stroke:red;
-        User2[User] --&gt; C
-        C -- &#34;Here is older data&#34; --&gt; User2
-        %% Note: C Accepts Writes locally
-    end
+  %%{init: {&#39;theme&#39;: &#39;dark&#39;}}%%
+graph TD
+    User[&#34;User&#34;] --&gt; Update[&#34;Update Address&#34;]
+    Update --&gt; File1[&#34;CS/Ram.txt (Updated)&#34;]
+    Update -.-&gt;|Forgot to Update| File2[&#34;Math/Ram.txt (Old Address)&#34;]
+    style File1 fill:#99ff99,stroke:#333
+    style File2 fill:#ff9999,stroke:#333
 </pre>
 
-<h2 id="summary-table">Summary Table
-</h2><div class="table-wrapper"><table>
-  <thead>
-      <tr>
-          <th style="text-align: left">Choice</th>
-          <th style="text-align: left">Trade-off</th>
-          <th style="text-align: left">Example</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td style="text-align: left"><strong>CA</strong></td>
-          <td style="text-align: left">No Partition Tolerance</td>
-          <td style="text-align: left"><strong>RDBMS (MySQL)</strong> (Single Node)</td>
-      </tr>
-      <tr>
-          <td style="text-align: left"><strong>CP</strong></td>
-          <td style="text-align: left">Sacrifice Availability</td>
-          <td style="text-align: left"><strong>MongoDB, HMAC</strong> (Banking)</td>
-      </tr>
-      <tr>
-          <td style="text-align: left"><strong>AP</strong></td>
-          <td style="text-align: left">Sacrifice Consistency</td>
-          <td style="text-align: left"><strong>Cassandra, DynamoDB</strong> (Social Media)</td>
-      </tr>
-  </tbody>
-</table></div>
-<h2 id="conclusion">Conclusion
-</h2><p>The CAP Theorem forces you to decide what matters more to your business.</p>
+<h3 id="3-security-issues">3. Security Issues
+</h3><p>It&rsquo;s hard to control granular access.</p>
 <ul>
-<li>If losing a transaction means legal trouble (Money), choose <strong>CP</strong>.</li>
-<li>If downtime means losing customers (Retail/Social), choose <strong>AP</strong>.</li>
+<li><strong>Scenario</strong>: You want a professor to see Ram&rsquo;s <em>grades</em> but not his <em>home address</em>.</li>
+<li><strong>Problem</strong>: In a file system, if you give read access to the file, they see everything. You can&rsquo;t easily hide specific &ldquo;columns&rdquo;.</li>
 </ul>
-<p>There is no &ldquo;best&rdquo; architecture, only the right one for your specific problem.</p>
+<h3 id="4-slow-data-access">4. Slow Data Access
+</h3><p>No indexing.</p>
+<ul>
+<li><strong>Scenario</strong>: &ldquo;Find all students with GPA &gt; 3.5&rdquo;.</li>
+<li><strong>Problem</strong>: You have to open <em>every single file</em> and check. This is incredibly slow compared to a SQL query.</li>
+</ul>
+<h2 id="conclusion">Conclusion
+</h2><p>File-based systems are fine for simple, personal data.
+But for any application with multiple users and relationships, you need a <strong>Relational Database Management System (RDBMS)</strong> to handle Consistency, Security, and Speed.</p>
 
 </section>
 
@@ -334,11 +291,11 @@
         
             <a href="/tags/system-design/">System Design</a>
         
-            <a href="/tags/cap-theorem/">CAP Theorem</a>
-        
-            <a href="/tags/distributed-systems/">Distributed Systems</a>
-        
             <a href="/tags/database/">Database</a>
+        
+            <a href="/tags/dbms/">DBMS</a>
+        
+            <a href="/tags/file-system/">File System</a>
         
     </section>
 
@@ -360,55 +317,55 @@
             
                 
 <article class="">
+    <a href="/blogs/system-design/cap-theorem/">
+        
+
+        <div class="article-details">
+            <h2 class="article-title">The CAP Theorem: You Can&#39;t Have It All</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/blogs/system-design/availability-and-fault-tolerance/">
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Availability &amp; Fault Tolerance: Keeping the Lights On</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/blogs/system-design/cache-eviction-strategies/">
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Cache Eviction Strategies: What to Delete?</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/blogs/system-design/caching/">
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Caching: The Secret to Speed</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
     <a href="/blogs/system-design/consistency-in-distributed-systems/">
         
 
         <div class="article-details">
             <h2 class="article-title">Consistency in Distributed Systems: The Data Truth</h2>
-        </div>
-    </a>
-</article>
-            
-                
-<article class="">
-    <a href="/blogs/system-design/scalability/">
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Scalability: Vertical vs Horizontal Scaling</h2>
-        </div>
-    </a>
-</article>
-            
-                
-<article class="">
-    <a href="/blogs/system-design/file-based-storage/">
-        
-
-        <div class="article-details">
-            <h2 class="article-title">The File-Based Storage Nightmare</h2>
-        </div>
-    </a>
-</article>
-            
-                
-<article class="">
-    <a href="/blogs/system-design/throughput-in-distributed-systems/">
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Throughput in Distributed Systems: The Impact of Scale</h2>
-        </div>
-    </a>
-</article>
-            
-                
-<article class="">
-    <a href="/blogs/system-design/time-in-distributed-systems/">
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Time in Distributed Systems: Why Clocks Lie</h2>
         </div>
     </a>
 </article>
