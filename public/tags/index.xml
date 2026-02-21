@@ -1,273 +1,303 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Tags on Chandan Kumar Dash</title>
-        <link>http://localhost:1313/tags/</link>
+        <link>http://localhost:53376/tags/</link>
         <description>Recent content in Tags on Chandan Kumar Dash</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sun, 08 Feb 2026 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 21 Feb 2026 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:53376/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+            <title>Advanced</title>
+            <link>http://localhost:53376/tags/advanced/</link>
+            <pubDate>Sat, 21 Feb 2026 00:00:00 +0000</pubDate>
+            <guid>http://localhost:53376/tags/advanced/</guid>
+            <description></description>
+        </item><item>
+            <title>Beginner</title>
+            <link>http://localhost:53376/tags/beginner/</link>
+            <pubDate>Sat, 21 Feb 2026 00:00:00 +0000</pubDate>
+            <guid>http://localhost:53376/tags/beginner/</guid>
+            <description></description>
+        </item><item>
+            <title>Cheatsheet</title>
+            <link>http://localhost:53376/tags/cheatsheet/</link>
+            <pubDate>Sat, 21 Feb 2026 00:00:00 +0000</pubDate>
+            <guid>http://localhost:53376/tags/cheatsheet/</guid>
+            <description></description>
+        </item><item>
+            <title>Git</title>
+            <link>http://localhost:53376/tags/git/</link>
+            <pubDate>Sat, 21 Feb 2026 00:00:00 +0000</pubDate>
+            <guid>http://localhost:53376/tags/git/</guid>
+            <description></description>
+        </item><item>
+            <title>Version Control</title>
+            <link>http://localhost:53376/tags/version-control/</link>
+            <pubDate>Sat, 21 Feb 2026 00:00:00 +0000</pubDate>
+            <guid>http://localhost:53376/tags/version-control/</guid>
+            <description></description>
+        </item><item>
             <title>ACID</title>
-            <link>http://localhost:1313/tags/acid/</link>
+            <link>http://localhost:53376/tags/acid/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/acid/</guid>
+            <guid>http://localhost:53376/tags/acid/</guid>
             <description></description>
         </item><item>
             <title>Availability</title>
-            <link>http://localhost:1313/tags/availability/</link>
+            <link>http://localhost:53376/tags/availability/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/availability/</guid>
+            <guid>http://localhost:53376/tags/availability/</guid>
             <description></description>
         </item><item>
             <title>Caching</title>
-            <link>http://localhost:1313/tags/caching/</link>
+            <link>http://localhost:53376/tags/caching/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/caching/</guid>
+            <guid>http://localhost:53376/tags/caching/</guid>
             <description></description>
         </item><item>
             <title>CAP Theorem</title>
-            <link>http://localhost:1313/tags/cap-theorem/</link>
+            <link>http://localhost:53376/tags/cap-theorem/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/cap-theorem/</guid>
+            <guid>http://localhost:53376/tags/cap-theorem/</guid>
             <description></description>
         </item><item>
             <title>CDN</title>
-            <link>http://localhost:1313/tags/cdn/</link>
+            <link>http://localhost:53376/tags/cdn/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/cdn/</guid>
+            <guid>http://localhost:53376/tags/cdn/</guid>
             <description></description>
         </item><item>
             <title>Consistency</title>
-            <link>http://localhost:1313/tags/consistency/</link>
+            <link>http://localhost:53376/tags/consistency/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/consistency/</guid>
+            <guid>http://localhost:53376/tags/consistency/</guid>
             <description></description>
         </item><item>
             <title>Database</title>
-            <link>http://localhost:1313/tags/database/</link>
+            <link>http://localhost:53376/tags/database/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/database/</guid>
+            <guid>http://localhost:53376/tags/database/</guid>
             <description></description>
         </item><item>
             <title>Databases</title>
-            <link>http://localhost:1313/tags/databases/</link>
+            <link>http://localhost:53376/tags/databases/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/databases/</guid>
+            <guid>http://localhost:53376/tags/databases/</guid>
             <description></description>
         </item><item>
             <title>DBMS</title>
-            <link>http://localhost:1313/tags/dbms/</link>
+            <link>http://localhost:53376/tags/dbms/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/dbms/</guid>
+            <guid>http://localhost:53376/tags/dbms/</guid>
             <description></description>
         </item><item>
             <title>Distributed Systems</title>
-            <link>http://localhost:1313/tags/distributed-systems/</link>
+            <link>http://localhost:53376/tags/distributed-systems/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/distributed-systems/</guid>
+            <guid>http://localhost:53376/tags/distributed-systems/</guid>
             <description></description>
         </item><item>
             <title>Eviction</title>
-            <link>http://localhost:1313/tags/eviction/</link>
+            <link>http://localhost:53376/tags/eviction/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/eviction/</guid>
+            <guid>http://localhost:53376/tags/eviction/</guid>
             <description></description>
         </item><item>
             <title>Fault Tolerance</title>
-            <link>http://localhost:1313/tags/fault-tolerance/</link>
+            <link>http://localhost:53376/tags/fault-tolerance/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/fault-tolerance/</guid>
+            <guid>http://localhost:53376/tags/fault-tolerance/</guid>
             <description></description>
         </item><item>
             <title>File System</title>
-            <link>http://localhost:1313/tags/file-system/</link>
+            <link>http://localhost:53376/tags/file-system/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/file-system/</guid>
+            <guid>http://localhost:53376/tags/file-system/</guid>
             <description></description>
         </item><item>
             <title>High Availability</title>
-            <link>http://localhost:1313/tags/high-availability/</link>
+            <link>http://localhost:53376/tags/high-availability/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/high-availability/</guid>
+            <guid>http://localhost:53376/tags/high-availability/</guid>
             <description></description>
         </item><item>
             <title>High Level</title>
-            <link>http://localhost:1313/tags/high-level/</link>
+            <link>http://localhost:53376/tags/high-level/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/high-level/</guid>
+            <guid>http://localhost:53376/tags/high-level/</guid>
             <description></description>
         </item><item>
             <title>Lamport Clock</title>
-            <link>http://localhost:1313/tags/lamport-clock/</link>
+            <link>http://localhost:53376/tags/lamport-clock/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/lamport-clock/</guid>
+            <guid>http://localhost:53376/tags/lamport-clock/</guid>
             <description></description>
         </item><item>
             <title>Latency</title>
-            <link>http://localhost:1313/tags/latency/</link>
+            <link>http://localhost:53376/tags/latency/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/latency/</guid>
+            <guid>http://localhost:53376/tags/latency/</guid>
             <description></description>
         </item><item>
             <title>LFU</title>
-            <link>http://localhost:1313/tags/lfu/</link>
+            <link>http://localhost:53376/tags/lfu/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/lfu/</guid>
+            <guid>http://localhost:53376/tags/lfu/</guid>
             <description></description>
         </item><item>
             <title>Load Balancing</title>
-            <link>http://localhost:1313/tags/load-balancing/</link>
+            <link>http://localhost:53376/tags/load-balancing/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/load-balancing/</guid>
+            <guid>http://localhost:53376/tags/load-balancing/</guid>
             <description></description>
         </item><item>
             <title>Logical Time</title>
-            <link>http://localhost:1313/tags/logical-time/</link>
+            <link>http://localhost:53376/tags/logical-time/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/logical-time/</guid>
+            <guid>http://localhost:53376/tags/logical-time/</guid>
             <description></description>
         </item><item>
             <title>Low Level</title>
-            <link>http://localhost:1313/tags/low-level/</link>
+            <link>http://localhost:53376/tags/low-level/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/low-level/</guid>
+            <guid>http://localhost:53376/tags/low-level/</guid>
             <description></description>
         </item><item>
             <title>LRU</title>
-            <link>http://localhost:1313/tags/lru/</link>
+            <link>http://localhost:53376/tags/lru/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/lru/</guid>
+            <guid>http://localhost:53376/tags/lru/</guid>
             <description></description>
         </item><item>
             <title>Optimization</title>
-            <link>http://localhost:1313/tags/optimization/</link>
+            <link>http://localhost:53376/tags/optimization/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/optimization/</guid>
+            <guid>http://localhost:53376/tags/optimization/</guid>
             <description></description>
         </item><item>
             <title>Performance</title>
-            <link>http://localhost:1313/tags/performance/</link>
+            <link>http://localhost:53376/tags/performance/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/performance/</guid>
+            <guid>http://localhost:53376/tags/performance/</guid>
             <description></description>
         </item><item>
             <title>RDBMS</title>
-            <link>http://localhost:1313/tags/rdbms/</link>
+            <link>http://localhost:53376/tags/rdbms/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/rdbms/</guid>
+            <guid>http://localhost:53376/tags/rdbms/</guid>
             <description></description>
         </item><item>
             <title>Redis</title>
-            <link>http://localhost:1313/tags/redis/</link>
+            <link>http://localhost:53376/tags/redis/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/redis/</guid>
+            <guid>http://localhost:53376/tags/redis/</guid>
             <description></description>
         </item><item>
             <title>Redundancy</title>
-            <link>http://localhost:1313/tags/redundancy/</link>
+            <link>http://localhost:53376/tags/redundancy/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/redundancy/</guid>
+            <guid>http://localhost:53376/tags/redundancy/</guid>
             <description></description>
         </item><item>
             <title>Reliability</title>
-            <link>http://localhost:1313/tags/reliability/</link>
+            <link>http://localhost:53376/tags/reliability/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/reliability/</guid>
+            <guid>http://localhost:53376/tags/reliability/</guid>
             <description></description>
         </item><item>
             <title>Replication</title>
-            <link>http://localhost:1313/tags/replication/</link>
+            <link>http://localhost:53376/tags/replication/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/replication/</guid>
+            <guid>http://localhost:53376/tags/replication/</guid>
             <description></description>
         </item><item>
             <title>Scalability</title>
-            <link>http://localhost:1313/tags/scalability/</link>
+            <link>http://localhost:53376/tags/scalability/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/scalability/</guid>
+            <guid>http://localhost:53376/tags/scalability/</guid>
             <description></description>
         </item><item>
             <title>Scaling</title>
-            <link>http://localhost:1313/tags/scaling/</link>
+            <link>http://localhost:53376/tags/scaling/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/scaling/</guid>
+            <guid>http://localhost:53376/tags/scaling/</guid>
             <description></description>
         </item><item>
             <title>SQL</title>
-            <link>http://localhost:1313/tags/sql/</link>
+            <link>http://localhost:53376/tags/sql/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/sql/</guid>
+            <guid>http://localhost:53376/tags/sql/</guid>
             <description></description>
         </item><item>
             <title>System Design</title>
-            <link>http://localhost:1313/tags/system-design/</link>
+            <link>http://localhost:53376/tags/system-design/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/system-design/</guid>
+            <guid>http://localhost:53376/tags/system-design/</guid>
             <description></description>
         </item><item>
             <title>Throughput</title>
-            <link>http://localhost:1313/tags/throughput/</link>
+            <link>http://localhost:53376/tags/throughput/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/throughput/</guid>
+            <guid>http://localhost:53376/tags/throughput/</guid>
             <description></description>
         </item><item>
             <title>Architecture</title>
-            <link>http://localhost:1313/tags/architecture/</link>
+            <link>http://localhost:53376/tags/architecture/</link>
             <pubDate>Sat, 07 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/architecture/</guid>
+            <guid>http://localhost:53376/tags/architecture/</guid>
             <description></description>
         </item><item>
             <title>Monolith</title>
-            <link>http://localhost:1313/tags/monolith/</link>
+            <link>http://localhost:53376/tags/monolith/</link>
             <pubDate>Sat, 07 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/monolith/</guid>
+            <guid>http://localhost:53376/tags/monolith/</guid>
             <description></description>
         </item><item>
             <title>Software Engineering</title>
-            <link>http://localhost:1313/tags/software-engineering/</link>
+            <link>http://localhost:53376/tags/software-engineering/</link>
             <pubDate>Sat, 07 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/software-engineering/</guid>
+            <guid>http://localhost:53376/tags/software-engineering/</guid>
             <description></description>
         </item><item>
             <title>CocoaPods</title>
-            <link>http://localhost:1313/tags/cocoapods/</link>
+            <link>http://localhost:53376/tags/cocoapods/</link>
             <pubDate>Sat, 31 Jan 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/cocoapods/</guid>
+            <guid>http://localhost:53376/tags/cocoapods/</guid>
             <description></description>
         </item><item>
             <title>CS Fundamentals</title>
-            <link>http://localhost:1313/tags/cs-fundamentals/</link>
+            <link>http://localhost:53376/tags/cs-fundamentals/</link>
             <pubDate>Sat, 31 Jan 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/cs-fundamentals/</guid>
+            <guid>http://localhost:53376/tags/cs-fundamentals/</guid>
             <description></description>
         </item><item>
             <title>Data Structures</title>
-            <link>http://localhost:1313/tags/data-structures/</link>
+            <link>http://localhost:53376/tags/data-structures/</link>
             <pubDate>Sat, 31 Jan 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/data-structures/</guid>
+            <guid>http://localhost:53376/tags/data-structures/</guid>
             <description></description>
         </item><item>
             <title>IOS</title>
-            <link>http://localhost:1313/tags/ios/</link>
+            <link>http://localhost:53376/tags/ios/</link>
             <pubDate>Sat, 31 Jan 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/ios/</guid>
+            <guid>http://localhost:53376/tags/ios/</guid>
             <description></description>
         </item><item>
             <title>Migration</title>
-            <link>http://localhost:1313/tags/migration/</link>
+            <link>http://localhost:53376/tags/migration/</link>
             <pubDate>Sat, 31 Jan 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/migration/</guid>
+            <guid>http://localhost:53376/tags/migration/</guid>
             <description></description>
         </item><item>
             <title>SPM</title>
-            <link>http://localhost:1313/tags/spm/</link>
+            <link>http://localhost:53376/tags/spm/</link>
             <pubDate>Sat, 31 Jan 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/spm/</guid>
+            <guid>http://localhost:53376/tags/spm/</guid>
             <description></description>
         </item><item>
             <title>Swift</title>
-            <link>http://localhost:1313/tags/swift/</link>
+            <link>http://localhost:53376/tags/swift/</link>
             <pubDate>Sat, 31 Jan 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/tags/swift/</guid>
+            <guid>http://localhost:53376/tags/swift/</guid>
             <description></description>
         </item></channel>
 </rss>

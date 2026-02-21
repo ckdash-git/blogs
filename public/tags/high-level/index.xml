@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>High Level on Chandan Kumar Dash</title>
-        <link>http://localhost:1313/tags/high-level/</link>
+        <link>http://localhost:53376/tags/high-level/</link>
         <description>Recent content in High Level on Chandan Kumar Dash</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sun, 08 Feb 2026 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/high-level/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 08 Feb 2026 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:53376/tags/high-level/index.xml" rel="self" type="application/rss+xml" /><item>
             <title>System Design</title>
-            <link>http://localhost:1313/blogs/system-design/</link>
+            <link>http://localhost:53376/blogs/system-design/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:1313/blogs/system-design/</guid>
-            <description>&lt;img src=&#34;http://localhost:1313/&#34; alt=&#34;Featured image of post System Design&#34; /&gt;</description>
+            <guid>http://localhost:53376/blogs/system-design/</guid>
+            <description>&lt;img src=&#34;http://localhost:53376/&#34; alt=&#34;Featured image of post System Design&#34; /&gt;</description>
         </item></channel>
 </rss>

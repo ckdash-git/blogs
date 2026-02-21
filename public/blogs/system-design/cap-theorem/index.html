@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
-    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=53376&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Consistency, Availability, Partition Tolerance. Pick two. We explore the ultimate trade-off in distributed systems and why 'P' is not optional.">
 <title>The CAP Theorem: You Can&#39;t Have It All</title>
 
-<link rel='canonical' href='http://localhost:1313/blogs/system-design/cap-theorem/'>
+<link rel='canonical' href='http://localhost:53376/blogs/system-design/cap-theorem/'>
 
 <link rel="stylesheet" href="/scss/style.min.f8c0f8630bb3b8ecceb9476a9adf9801f44aa2dca566b2eeedd978695b1bb9df.css"><meta property='og:title' content="The CAP Theorem: You Can't Have It All">
 <meta property='og:description' content="Consistency, Availability, Partition Tolerance. Pick two. We explore the ultimate trade-off in distributed systems and why 'P' is not optional.">
-<meta property='og:url' content='http://localhost:1313/blogs/system-design/cap-theorem/'>
+<meta property='og:url' content='http://localhost:53376/blogs/system-design/cap-theorem/'>
 <meta property='og:site_name' content='Chandan Kumar Dash'>
 <meta property='og:type' content='article'><meta property='article:section' content='Blogs' /><meta property='article:tag' content='System Design' /><meta property='article:tag' content='CAP Theorem' /><meta property='article:tag' content='Distributed Systems' /><meta property='article:tag' content='Database' /><meta property='article:published_time' content='2026-02-08T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-02-08T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="The CAP Theorem: You Can't Have It All">
@@ -39,7 +39,7 @@
         }
     })();
 </script>
-<div class="container main-container flex on-phone--column compact"><aside class="sidebar left-sidebar sticky ">
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
     <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
         <span class="hamburger-box">
             <span class="hamburger-inner"></span>
@@ -155,7 +155,62 @@
     </ol>
 </aside>
 
-    
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                <form action="/page/search/" class="search-form widget" >
+        <p>
+            <label>Search</label>
+            <input name="keyword" required placeholder="Type something..." />
+        
+            <button title="Search">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+            </button>
+        </p>
+    </form>
+            
+        
+            
+                
+    <section class="widget archives">
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav class="toc-nav" id="TableOfContents">
+                
+  <ul>
+    <li><a href="#the-three-pillars">The Three Pillars</a>
+      <ul>
+        <li><a href="#1-consistency-c">1. Consistency (C)</a></li>
+        <li><a href="#2-availability-a">2. Availability (A)</a></li>
+        <li><a href="#3-partition-tolerance-p">3. Partition Tolerance (P)</a></li>
+      </ul>
+    </li>
+    <li><a href="#the-reality-p-is-not-optional">The Reality: P is Not Optional</a>
+      <ul>
+        <li><a href="#cp-consistency--partition-tolerance">CP (Consistency + Partition Tolerance)</a></li>
+        <li><a href="#ap-availability--partition-tolerance">AP (Availability + Partition Tolerance)</a></li>
+      </ul>
+    </li>
+    <li><a href="#summary-table">Summary Table</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+
+            </nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
 
             <main class="main full-width">
     <article class="main-article">
@@ -230,6 +285,38 @@
 
 </header>
 
+    
+    <aside class="article-toc">
+        <details>
+            <summary>
+                <div class="article-toc-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>
+                    <span>Table of contents</span>
+                </div>
+            </summary>
+            <nav class="toc-nav">
+                
+  <ul>
+    <li><a href="#the-three-pillars">The Three Pillars</a>
+      <ul>
+        <li><a href="#1-consistency-c">1. Consistency (C)</a></li>
+        <li><a href="#2-availability-a">2. Availability (A)</a></li>
+        <li><a href="#3-partition-tolerance-p">3. Partition Tolerance (P)</a></li>
+      </ul>
+    </li>
+    <li><a href="#the-reality-p-is-not-optional">The Reality: P is Not Optional</a>
+      <ul>
+        <li><a href="#cp-consistency--partition-tolerance">CP (Consistency + Partition Tolerance)</a></li>
+        <li><a href="#ap-availability--partition-tolerance">AP (Availability + Partition Tolerance)</a></li>
+      </ul>
+    </li>
+    <li><a href="#summary-table">Summary Table</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+
+            </nav>
+        </details>
+    </aside>
     
 
     <section class="article-content">
@@ -420,27 +507,55 @@
      
     
         
-    <div class="disqus-container">
-    
-</div>
-
-<style>
-    .disqus-container {
-        background-color: var(--card-background);
-        border-radius: var(--card-border-radius);
-        box-shadow: var(--shadow-l1);
-        padding: var(--card-padding);
-    }
-</style>
-
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="YOUR_GITHUB_USERNAME/YOUR_REPO_NAME"
+    data-repo-id=""
+    data-category="Announcements"
+    data-category-id=""
+    data-mapping="title"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="light"
+    data-lang="en"
+    data-loading="lazy"
+    crossorigin="anonymous"
+    async
+></script>
 <script>
-    window.addEventListener('onColorSchemeChange', (e) => {
-        if (typeof DISQUS == 'object') {
-            DISQUS.reset({
-                reload: true
-            });
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
         }
-    })
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('light');
+            } else {
+                setGiscusTheme('dark_dimmed');
+            }
+        }
+    })();
 </script>
 
     
