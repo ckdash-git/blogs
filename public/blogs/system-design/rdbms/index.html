@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Relational Databases solved the file system nightmare. But are they perfect? We look at how RDBMS works and where it struggles.">
+<title>RDBMS: Bringing Order to Chaos</title>
+
+<link rel='canonical' href='http://localhost:1313/blogs/system-design/rdbms/'>
+
+<link rel="stylesheet" href="/scss/style.min.f8c0f8630bb3b8ecceb9476a9adf9801f44aa2dca566b2eeedd978695b1bb9df.css"><meta property='og:title' content="RDBMS: Bringing Order to Chaos">
+<meta property='og:description' content="Relational Databases solved the file system nightmare. But are they perfect? We look at how RDBMS works and where it struggles.">
+<meta property='og:url' content='http://localhost:1313/blogs/system-design/rdbms/'>
+<meta property='og:site_name' content='Chandan Kumar Dash'>
+<meta property='og:type' content='article'><meta property='article:section' content='Blogs' /><meta property='article:tag' content='System Design' /><meta property='article:tag' content='Database' /><meta property='article:tag' content='RDBMS' /><meta property='article:tag' content='SQL' /><meta property='article:tag' content='ACID' /><meta property='article:published_time' content='2026-02-08T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-02-08T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="RDBMS: Bringing Order to Chaos">
+<meta name="twitter:description" content="Relational Databases solved the file system nightmare. But are they perfect? We look at how RDBMS works and where it struggles.">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "light");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column compact"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        <figure class="site-avatar">
+                <a href="/">
+                    <img src="/ckdash-git_17376967194752443571.jpg" 
+                        width="460"
+                        height="460"
+                        class="site-logo"
+                        loading="lazy"
+                        alt="Avatar">
+                </a>
+                
+            </figure>
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Chandan Kumar Dash</a></h1>
+            <h2 class="site-description">Software Development Engineer | Backend, Mobile - iOS, Go &amp; Flutter</h2>
+        </div>
+    </header><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/blogs/' >
+                
+                
+                
+                <span>Blogs</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/categories/' >
+                
+                
+                
+                <span>Categories</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/write-for-us/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-messages" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M21 14l-3 -3h-7a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1h9a1 1 0 0 1 1 1v10" />
+  <path d="M14 15v2a1 1 0 0 1 -1 1h-7l-3 3v-10a1 1 0 0 1 1 -1h2" />
+</svg>
+
+
+
+                
+                <span>Write for Internet</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            
+            
+            
+            <a href="/categories/system-design/" style="background-color: hsl(82, 60%, 84%); color: hsl(82, 60%, 15%);">
+                System Design
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/blogs/system-design/rdbms/">RDBMS: Bringing Order to Chaos</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            Relational Databases solved the file system nightmare. But are they perfect? We look at how RDBMS works and where it struggles.
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published" datetime='2026-02-08T00:00:00Z'>Sunday, February 8, 2026</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    2 minutes read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    
+
+    <section class="article-content">
+    
+    
+    <p>The step up from a File-Based System is the <strong>Relational Database Management System (RDBMS)</strong>.
+Examples: <strong>MySQL, PostgreSQL, Oracle, SQL Server</strong>.</p>
+<p>Instead of loose files, data is stored in <strong>Tables</strong> with strict structures.</p>
+<h2 id="core-concepts">Core Concepts
+</h2><ul>
+<li><strong>Tables</strong>: Like Excel sheets (Rows &amp; Columns).</li>
+<li><strong>Relationships</strong>: Tables are linked via <strong>Foreign Keys</strong>.</li>
+<li><strong>Schema</strong>: The structure is fixed. You must define columns (e.g., <code>Age</code> is an Integer) upfront.</li>
+</ul>
+<h2 id="why-rdbms-wins-vs-files">Why RDBMS Wins (vs. Files)
+</h2><h3 id="1-no-redundancy">1. No Redundancy
+</h3><p>Data is normalized.</p>
+<ul>
+<li><strong>Customer Table</strong>: Stores Name &amp; Address once.</li>
+<li><strong>Order Table</strong>: Links to Customer ID.
+If the customer moves, you update the address in <strong>one place</strong>.</li>
+</ul>
+<h3 id="2-consistency--integrity">2. Consistency &amp; Integrity
+</h3><p>RDBMS enforces rules.</p>
+<ul>
+<li><strong>Constraints</strong>: You can&rsquo;t enter &ldquo;Hello&rdquo; into an <code>Age</code> column.</li>
+<li><strong>ACID Properties</strong>: Transactions are &ldquo;All or Nothing&rdquo;. If money leaves Account A but fails to reach Account B, the entire transaction rolls back.</li>
+</ul>
+<h3 id="3-powerful-querying-sql">3. Powerful Querying (SQL)
+</h3><p>Instead of writing a script to open 1,000 files, you write:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span><span style="color:#ff79c6">SELECT</span> <span style="color:#ff79c6">*</span> <span style="color:#ff79c6">FROM</span> Students <span style="color:#ff79c6">WHERE</span> GPA <span style="color:#ff79c6">&gt;</span> <span style="color:#bd93f9">3</span>.<span style="color:#bd93f9">5</span>;
+</span></span></code></pre></div><pre class="mermaid">
+  %%{init: {&#39;theme&#39;: &#39;dark&#39;}}%%
+erDiagram
+    CUSTOMER ||--o{ ORDER : places
+    CUSTOMER {
+        int id PK
+        string name
+        string email
+    }
+    ORDER {
+        int id PK
+        int customer_id FK
+        string product
+    }
+</pre>
+
+<h2 id="the-limitations">The Limitations
+</h2><p>RDBMS is great, but it has flaws.</p>
+<h3 id="1-rigid-schema">1. Rigid Schema
+</h3><p>Changing the structure is hard.</p>
+<ul>
+<li><strong>Scenario</strong>: You want to add a &ldquo;GitHub Profile&rdquo; column to the User table.</li>
+<li><strong>Problem</strong>: You have to run an <code>ALTER TABLE</code> command, which can lock the database and cause downtime for millions of rows.</li>
+</ul>
+<h3 id="2-scalability-issues">2. Scalability Issues
+</h3><p>RDBMS is designed for <strong>Vertical Scaling</strong> (Bigger Server).
+<strong>Horizontal Scaling (Sharding)</strong> is very difficult because relationships (JOINs) heavily limit how you can split data across servers.</p>
+<h2 id="comparison">Comparison
+</h2><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Feature</th>
+          <th style="text-align: left">File System</th>
+          <th style="text-align: left">RDBMS</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><strong>Structure</strong></td>
+          <td style="text-align: left">Unstructured Files</td>
+          <td style="text-align: left">Structured Tables</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Redundancy</strong></td>
+          <td style="text-align: left">High (Duplicate data)</td>
+          <td style="text-align: left">Low (Normalization)</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Consistency</strong></td>
+          <td style="text-align: left">Risk of mismatch</td>
+          <td style="text-align: left">Enforced (ACID)</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Querying</strong></td>
+          <td style="text-align: left">Manual Parsing</td>
+          <td style="text-align: left">SQL</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Scaling</strong></td>
+          <td style="text-align: left">Hard</td>
+          <td style="text-align: left">Vertical (Good), Horizontal (Hard)</td>
+      </tr>
+  </tbody>
+</table></div>
+<h2 id="conclusion">Conclusion
+</h2><p>RDBMS is the industry standard for a reason. It provides safety and structure.
+However, when you need massive scale or flexible data structures, you might hit a wall. That&rsquo;s where <strong>NoSQL</strong> comes in (stay tuned!).</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/system-design/">System Design</a>
+        
+            <a href="/tags/database/">Database</a>
+        
+            <a href="/tags/rdbms/">RDBMS</a>
+        
+            <a href="/tags/sql/">SQL</a>
+        
+            <a href="/tags/acid/">ACID</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/blogs/system-design/cap-theorem/">
+        
+
+        <div class="article-details">
+            <h2 class="article-title">The CAP Theorem: You Can&#39;t Have It All</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/blogs/system-design/file-based-storage/">
+        
+
+        <div class="article-details">
+            <h2 class="article-title">The File-Based Storage Nightmare</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/blogs/system-design/availability-and-fault-tolerance/">
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Availability &amp; Fault Tolerance: Keeping the Lights On</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/blogs/system-design/cache-eviction-strategies/">
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Cache Eviction Strategies: What to Delete?</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/blogs/system-design/caching/">
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Caching: The Secret to Speed</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2026 Chandan Kumar Dash
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="4.0.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+
+
+
+<script type="module">
+    import gallery from '\/ts\/gallery.js';
+
+    const articleContent = document.querySelector('.article-content');
+    const shouldLoad = articleContent && (articleContent.querySelectorAll('figure').length > 0 || articleContent.querySelectorAll('img.gallery-image').length > 0);
+    
+    if (shouldLoad) {
+        gallery(articleContent);
+
+        const PhotoSwipeLightbox = (await import("https:\/\/cdn.jsdelivr.net\/npm\/photoswipe@5.4.4\/dist\/photoswipe-lightbox.esm.min.js")).default;
+        const styleHref = "https:\/\/cdn.jsdelivr.net\/npm\/photoswipe@5.4.4\/dist\/photoswipe.css";
+
+        const styleTag = document.createElement('link');
+        styleTag.rel = 'stylesheet';
+        styleTag.href = styleHref;
+        document.head.appendChild(styleTag);
+
+        const lightbox = new PhotoSwipeLightbox({
+            gallerySelector: '.article-content',
+            childSelector: 'figure a.image-link',
+            pswpModule: () => import("https:\/\/cdn.jsdelivr.net\/npm\/photoswipe@5.4.4\/dist\/photoswipe.esm.min.js")
+        });
+        lightbox.init();
+    }
+</script>
+    
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11.12.2/+esm';
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: 'neutral',
+    });
+</script>
+
+
+            </main>
+        </div>
+        <script type="text/javascript" src="/ts/main.39cc80f12e6178a46c3da502586a5f84be9f2c349788bcc21d5180619caf76eb.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Authors on Chandan Kumar Dash</title>
-        <link>http://localhost:55562/authors/</link>
+        <link>http://localhost:1313/authors/</link>
         <description>Recent content in Authors on Chandan Kumar Dash</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sun, 08 Feb 2026 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:55562/authors/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 08 Feb 2026 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/authors/index.xml" rel="self" type="application/rss+xml" /><item>
             <title>Chandan Kumar Dash</title>
-            <link>http://localhost:55562/authors/ckdash/</link>
+            <link>http://localhost:1313/authors/ckdash/</link>
             <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-            <guid>http://localhost:55562/authors/ckdash/</guid>
+            <guid>http://localhost:1313/authors/ckdash/</guid>
             <description>&lt;p&gt;I am a Software Engineer based in India, specializing in mobile development with &lt;strong&gt;Swift&lt;/strong&gt; and &lt;strong&gt;Flutter&lt;/strong&gt;, and backend systems with &lt;strong&gt;Go&lt;/strong&gt;. I love solving complex problems and sharing my knowledge through writing.&lt;/p&gt;&#xA;</description>
         </item><item>
             <title>Guest Author</title>
-            <link>http://localhost:55562/authors/guest/</link>
+            <link>http://localhost:1313/authors/guest/</link>
             <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-            <guid>http://localhost:55562/authors/guest/</guid>
+            <guid>http://localhost:1313/authors/guest/</guid>
             <description>&lt;p&gt;This is a guest post.&lt;/p&gt;&#xA;</description>
         </item></channel>
 </rss>
