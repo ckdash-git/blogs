@@ -73,3 +73,50 @@ theme = "hugo-theme-stack"
         params = { icon = "messages" }
 
 [permalinks]
+
+[outputs]
+    home = ["HTML", "RSS", "JSON"]
+    page = ["HTML"]
+
+
+
+[params.article]
+    toc = true
+    readingTime = true
+
+[params.widgets]
+    [[params.widgets.homepage]]
+        type = "search"
+
+    [[params.widgets.page]]
+        type = "search"
+    [[params.widgets.page]]
+        type = "toc"
+        
+[params.comments]
+    enabled = true
+    provider = "giscus"
+
+    [params.comments.giscus]
+        repo = "YOUR_GITHUB_USERNAME/YOUR_REPO_NAME" # Placeholder for Giscus Repo
+        repoID = "" # Placeholder
+        category = "Announcements"
+        categoryID = "" # Placeholder
+        mapping = "title"
+        lightTheme = "light"
+        darkTheme = "dark_dimmed"
+        reactionsEnabled = 1
+        emitMetadata = 0
+        inputPosition = "top"
+        lang = "en"
+
+[related]
+  includeNewer = true
+  threshold = 80
+  toLower = false
+  [[related.indices]]
+    name = "tags"
+    weight = 100
+  [[related.indices]]
+    name = "categories"
+    weight = 50
