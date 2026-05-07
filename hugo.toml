@@ -23,9 +23,13 @@ theme = "hugo-theme-stack"
     featuredImageField = "image"
 
     [params.sidebar]
-        avatar = "https://github.com/ckdash-git.png"
         title = "Chandan Kumar Dash"
         subtitle = "Software Development Engineer | Backend, Mobile - iOS, Go & Flutter"
+
+        [params.sidebar.avatar]
+            enabled = true
+            local = false
+            src = "https://github.com/ckdash-git.png"
 
     [params.colorScheme]
         toggle = true
